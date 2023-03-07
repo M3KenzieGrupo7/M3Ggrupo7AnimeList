@@ -2,6 +2,8 @@ import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../../services/api";
 import { IDataUser, IDefaultProviderProps, IEditFormValues, IFavoriteAnime, IIdUser, ILoginFormData, IRegisterFormValues, IUser } from "./types";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 interface IUserContext {
     user: IUser | null;
@@ -24,7 +26,8 @@ export const UserProvider = ({children}: IDefaultProviderProps) => {
           localStorage.setItem("GeekAnimes:@idUser", JSON.stringify(response.data.user.id) );
           localStorage.setItem("GeekAnimes:@user", JSON.stringify(response.data.user));
           setUser(response.data.user);
-        //   navigate("/dashboard");
+          toast.success("Login efetuado")
+          navigate("/dashboard");
         } 
         catch (error) {
           console.log(error);
@@ -60,7 +63,8 @@ export const UserProvider = ({children}: IDefaultProviderProps) => {
           setUser(response.data.user);
           localStorage.setItem("GeekAnimes:@token", response.data.accessToken);
           localStorage.setItem("GeekAnimes:@user", JSON.stringify(response.data.user));
-        //   navigate("/dashboard")
+          
+          navigate("/login")
         } 
         catch (error) {
           console.log(error)
@@ -124,6 +128,7 @@ export const UserProvider = ({children}: IDefaultProviderProps) => {
     };
 
     return(
+  
         <UserContext.Provider 
         value={{
             loginUser,
@@ -133,6 +138,8 @@ export const UserProvider = ({children}: IDefaultProviderProps) => {
             animesFavoritesUser
         }}>
             { children }
+       
         </UserContext.Provider>
+       
     );
 };

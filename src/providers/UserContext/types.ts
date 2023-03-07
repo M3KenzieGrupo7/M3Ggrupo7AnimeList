@@ -23,7 +23,7 @@ export interface IDefaultProviderProps{
 export interface IRegisterFormValues {
     name: string;
     nickname: string;
-    avatar: string;
+    background: string;
     email: string;
     password: string;
     repeatPassword?: string;
