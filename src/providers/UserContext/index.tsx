@@ -20,9 +20,9 @@ export const UserProvider = ({children}: IDefaultProviderProps) => {
     const loginUser = async (formData: ILoginFormData) => {
         try {
           const response = await api.post<IDataUser>(`/login`, formData);
-          localStorage.setItem("@TOKEN", response.data.accessToken);
-          localStorage.setItem("@IDUSER", JSON.stringify(response.data.user.id) );
-          localStorage.setItem("@USER", JSON.stringify(response.data.user));
+          localStorage.setItem("GeekAnimes:@token", response.data.accessToken);
+          localStorage.setItem("GeekAnimes:@idUser", JSON.stringify(response.data.user.id) );
+          localStorage.setItem("GeekAnimes:@user", JSON.stringify(response.data.user));
           setUser(response.data.user);
         //   navigate("/dashboard");
         } 
@@ -32,9 +32,9 @@ export const UserProvider = ({children}: IDefaultProviderProps) => {
     };
 
     useEffect(() => {
-        const idUser: IIdUser  = JSON.parse(localStorage.getItem('@IDUSER') || "null");
+        const idUser: IIdUser  = JSON.parse(localStorage.getItem('GeekAnimes:@idUser') || "null");
         const autoLogin = async (id: IIdUser) => {
-            const token = localStorage.getItem("@TOKEN"); 
+            const token = localStorage.getItem("GeekAnimes:@token"); 
             if(token){
                 try {
                   const response = await api.get<IUser>(`/users/${id}`, {
@@ -42,7 +42,7 @@ export const UserProvider = ({children}: IDefaultProviderProps) => {
                       'Authorization': `Bearer ${token}`
                     }
                   });
-                  localStorage.setItem("@USER", JSON.stringify(response.data));
+                  localStorage.setItem("GeekAnimes:@user", JSON.stringify(response.data));
                   setUser(response.data);
                 //   navigate("/dashboard");
                 } 
@@ -58,8 +58,8 @@ export const UserProvider = ({children}: IDefaultProviderProps) => {
         try {
           const response = await api.post<IDataUser>(`/users`, formData);
           setUser(response.data.user);
-          localStorage.setItem("@TOKEN", response.data.accessToken);
-          localStorage.setItem("@USER", JSON.stringify(response.data.user));
+          localStorage.setItem("GeekAnimes:@token", response.data.accessToken);
+          localStorage.setItem("GeekAnimes:@user", JSON.stringify(response.data.user));
         //   navigate("/dashboard")
         } 
         catch (error) {
@@ -68,7 +68,7 @@ export const UserProvider = ({children}: IDefaultProviderProps) => {
     };
 
     const editUser = async (formData: IEditFormValues, idUser:number) => {
-      const token = localStorage.getItem("@TOKEN");
+      const token = localStorage.getItem("GeekAnimes:@token");
       if(token){
         try {
           const response = await api.patch<IUser>(`/users/${idUser}`, formData, {
@@ -77,7 +77,7 @@ export const UserProvider = ({children}: IDefaultProviderProps) => {
             }
           });
           setUser(response.data);
-          localStorage.setItem("@USER", JSON.stringify(response.data));
+          localStorage.setItem("GeekAnimes:@user", JSON.stringify(response.data));
         //   navigate("/dashboard")
         } 
         catch (error) {
@@ -87,7 +87,7 @@ export const UserProvider = ({children}: IDefaultProviderProps) => {
     };
 
     const deleteUser = async (idUser:number) => {
-      const token = localStorage.getItem("@TOKEN");
+      const token = localStorage.getItem("GeekAnimes:@token");
       if(token){
         try {
           await api.delete<null>(`/users/${idUser}`, {
@@ -95,8 +95,8 @@ export const UserProvider = ({children}: IDefaultProviderProps) => {
               'Authorization': `Bearer ${token}`
             }
           });
-          localStorage.removeItem("@TOKEN");
-          localStorage.removeItem("@USER");
+          localStorage.removeItem("GeekAnimes:@token");
+          localStorage.removeItem("GeekAnimes:@user");
         //   navigate("/dashboard")
         } 
         catch (error) {
@@ -106,7 +106,7 @@ export const UserProvider = ({children}: IDefaultProviderProps) => {
     };
 
     const animesFavoritesUser = async (id: IIdUser) => {
-      const token = localStorage.getItem("@TOKEN"); 
+      const token = localStorage.getItem("GeekAnimes:@token"); 
       if(token){
         try {
           const response = await api.get<IFavoriteAnime[]>(`/users/${id}/favorites`, {
@@ -114,7 +114,7 @@ export const UserProvider = ({children}: IDefaultProviderProps) => {
               'Authorization': `Bearer ${token}`
             }
           });
-          localStorage.setItem("@FavAnimes", JSON.stringify(response.data));
+          localStorage.setItem("GeekAnimes:@favorites", JSON.stringify(response.data));
         //   navigate("/dashboard");
         } 
         catch (error) {
