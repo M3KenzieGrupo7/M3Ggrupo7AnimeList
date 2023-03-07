@@ -1,9 +1,9 @@
-export interface iLoginFormData {
+export interface ILoginFormData {
     email: string;
     password: string;
 }
 
-export interface iUser{
+export interface IUser{
     email: string;
     name: string;
     password?: number;
@@ -12,15 +12,15 @@ export interface iUser{
     id: number;
 }
 
-export interface iDataUser {
+export interface IDataUser {
     accessToken: string;
-    user: iUser;
+    user: IUser;
 }
-export interface iDefaultProviderProps{
+export interface IDefaultProviderProps{
     children: React.ReactNode;
 }
 
-export interface iRegisterFormValues {
+export interface IRegisterFormValues {
     name: string;
     nickname: string;
     avatar: string;
@@ -29,7 +29,7 @@ export interface iRegisterFormValues {
     repeatPassword?: string;
 }
 
-export interface iEditFormValues {
+export interface IEditFormValues {
     name?: string;
     nickname?: string;
     avatar?: string;
@@ -38,7 +38,7 @@ export interface iEditFormValues {
     repeatPassword?: string;
 }
 
-export interface iIdUser {
+export interface IIdUser {
     id: number;
 }
 // {
@@ -50,7 +50,7 @@ export interface iIdUser {
 //     "id": 3
 // }
 
-export interface iFavoriteAnime{
+export interface IFavoriteAnime{
     book: string;
     author: string;
     year: number;

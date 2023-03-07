@@ -1,25 +1,25 @@
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../../services/api";
-import { iDataUser, iDefaultProviderProps, iEditFormValues, iFavoriteAnime, iIdUser, iLoginFormData, iRegisterFormValues, iUser } from "./types";
+import { IDataUser, IDefaultProviderProps, IEditFormValues, IFavoriteAnime, IIdUser, ILoginFormData, IRegisterFormValues, IUser } from "./types";
 
-interface iUserContext {
-    user: iUser | null;
-    userLogin: (formData: iLoginFormData) => Promise<void>;
-    userRegister: (formData: iRegisterFormValues) => Promise<void>;
-    userDelete: (idUser: number) => Promise<void>;
-    userAnimesFavorites: (id: iIdUser) => Promise<void>
+interface IUserContext {
+    user: IUser | null;
+    loginUser: (formData: ILoginFormData) => Promise<void>;
+    registerUser: (formData: IRegisterFormValues) => Promise<void>;
+    deleteUser: (idUser: number) => Promise<void>;
+    animesFavoritesUser: (id: IIdUser) => Promise<void>
   }
 
-export const UserContext = createContext({}  as iUserContext);
+export const UserContext = createContext({}  as IUserContext);
 
-export const UserProvider = ({children}: iDefaultProviderProps) => {
-    const [user, setUser] = useState<iUser | null>(null);
+export const UserProvider = ({children}: IDefaultProviderProps) => {
+    const [user, setUser] = useState<IUser | null>(null);
     const navigate = useNavigate();
 
-    const userLogin = async (formData: iLoginFormData) => {
+    const loginUser = async (formData: ILoginFormData) => {
         try {
-          const response = await api.post<iDataUser>(`/login`, formData);
+          const response = await api.post<IDataUser>(`/login`, formData);
           localStorage.setItem("@TOKEN", response.data.accessToken);
           localStorage.setItem("@IDUSER", JSON.stringify(response.data.user.id) );
           localStorage.setItem("@USER", JSON.stringify(response.data.user));
@@ -32,12 +32,12 @@ export const UserProvider = ({children}: iDefaultProviderProps) => {
     };
 
     useEffect(() => {
-        const idUser: iIdUser  = JSON.parse(localStorage.getItem('@IDUSER') || "null");
-        const autoLogin = async (id: iIdUser) => {
+        const idUser: IIdUser  = JSON.parse(localStorage.getItem('@IDUSER') || "null");
+        const autoLogin = async (id: IIdUser) => {
             const token = localStorage.getItem("@TOKEN"); 
             if(token){
                 try {
-                  const response = await api.get<iUser>(`/users/${id}`, {
+                  const response = await api.get<IUser>(`/users/${id}`, {
                     headers: {
                       'Authorization': `Bearer ${token}`
                     }
@@ -54,9 +54,9 @@ export const UserProvider = ({children}: iDefaultProviderProps) => {
         autoLogin(idUser)
     }, [])
 
-    const userRegister = async (formData: iRegisterFormValues) => {
+    const registerUser = async (formData: IRegisterFormValues) => {
         try {
-          const response = await api.post<iDataUser>(`/users`, formData);
+          const response = await api.post<IDataUser>(`/users`, formData);
           setUser(response.data.user);
           localStorage.setItem("@TOKEN", response.data.accessToken);
           localStorage.setItem("@USER", JSON.stringify(response.data.user));
@@ -65,13 +65,13 @@ export const UserProvider = ({children}: iDefaultProviderProps) => {
         catch (error) {
           console.log(error)
         }
-      };
+    };
 
-    const userEdit = async (formData: iEditFormValues, idUser:number) => {
+    const editUser = async (formData: IEditFormValues, idUser:number) => {
       const token = localStorage.getItem("@TOKEN");
       if(token){
         try {
-          const response = await api.patch<iUser>(`/users/${idUser}`, formData, {
+          const response = await api.patch<IUser>(`/users/${idUser}`, formData, {
             headers: {
               'Authorization': `Bearer ${token}`
             }
@@ -86,7 +86,7 @@ export const UserProvider = ({children}: iDefaultProviderProps) => {
       }
     };
 
-    const userDelete = async (idUser:number) => {
+    const deleteUser = async (idUser:number) => {
       const token = localStorage.getItem("@TOKEN");
       if(token){
         try {
@@ -105,11 +105,11 @@ export const UserProvider = ({children}: iDefaultProviderProps) => {
       }
     };
 
-    const userAnimesFavorites = async (id: iIdUser) => {
+    const animesFavoritesUser = async (id: IIdUser) => {
       const token = localStorage.getItem("@TOKEN"); 
       if(token){
         try {
-          const response = await api.get<iFavoriteAnime[]>(`/users/${id}/favorites`, {
+          const response = await api.get<IFavoriteAnime[]>(`/users/${id}/favorites`, {
             headers: {
               'Authorization': `Bearer ${token}`
             }
@@ -126,11 +126,11 @@ export const UserProvider = ({children}: iDefaultProviderProps) => {
     return(
         <UserContext.Provider 
         value={{
-            userLogin,
+            loginUser,
             user,
-            userRegister,
-            userDelete,
-            userAnimesFavorites
+            registerUser,
+            deleteUser,
+            animesFavoritesUser
         }}>
             { children }
         </UserContext.Provider>
