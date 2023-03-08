@@ -1,14 +1,13 @@
 export interface IIdFavoritesUser {
-    id: number;
+  id: number;
 }
 
 export interface IIdFavoritesAnime {
-    id: number;
+  id: number;
 }
 
 export interface IFavoriteAnimes {
-    userId: number;
-    animesIds: number[];
-    id?: number;
+  userId: number;
+  animesIds: number[];
+  id?: number;
 }
-

@@ -1,12 +1,10 @@
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../../services/api";
-import { IFavoriteAnimes } from "../AnimesFavoritesContext/type";
 import {
   IDataUser,
   IDefaultProviderProps,
   IEditFormValues,
-  IFavoriteAnime,
   IIdUser,
   ILoginFormData,
   IRegisterFormValues,
@@ -20,8 +18,9 @@ interface IUserContext {
   user: IUser | null;
   loginUser: (formData: ILoginFormData) => Promise<void>;
   registerUser: (formData: IRegisterFormValues) => Promise<void>;
+  editUser: (formData: IEditFormValues, idUser: number) => Promise<void>;
   deleteUser: (idUser: number) => Promise<void>;
-  animesFavoritesUser: (id: IIdUser) => Promise<void>;
+  userLogout: () => void;
 }
 
 export const UserContext = createContext({} as IUserContext);
@@ -86,9 +85,11 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
         "GeekAnimes:@user",
         JSON.stringify(response.data.user)
       );
-      toast.success("Conta criada com sucesso!")
-        setTimeout(()=>navigate('/login'),1500)
-      
+      localStorage.setItem(
+        "GeekAnimes:@idUser",
+        JSON.stringify(response.data.user.id)
+      );
+      //   navigate("/dashboard")
     } catch (error) {
       const currentError = error as AxiosError
       console.log(currentError);
@@ -132,27 +133,13 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
     }
   };
 
-  const animesFavoritesUser = async (id: IIdUser) => {
-    const token = localStorage.getItem("GeekAnimes:@token");
-    if (token) {
-      try {
-        const response = await api.get<IFavoriteAnime[]>(
-          `/users/${id}/favorites`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        localStorage.setItem(
-          "GeekAnimes:@favorites",
-          JSON.stringify(response.data)
-        );
-        //   navigate("/dashboard");
-      } catch (error) {
-        console.log(error);
-      }
-    }
+
+  const userLogout = () => {
+    setUser(null);
+    localStorage.removeItem("GeekAnimes:@token");
+    localStorage.removeItem("GeekAnimes:@idUser");
+    localStorage.removeItem("GeekAnimes:@user");
+    navigate("/");
   };
 
   return (
@@ -161,9 +148,9 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
         loginUser,
         user,
         registerUser,
+        editUser,
         deleteUser,
-        animesFavoritesUser,
-    
+        userLogout,
       }}
     >
       {children}
