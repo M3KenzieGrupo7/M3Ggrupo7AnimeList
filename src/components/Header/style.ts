@@ -6,7 +6,7 @@ interface IHeaderStyleProps {
 
 export const StyledHeader = styled.header`
   width: 100%;
-  height: 60px;
+  height: 80px;
   background-color: ${({ theme }) => theme.colors.grey2};
   display: flex;
   justify-content: space-between;
@@ -50,13 +50,19 @@ export const HeaderDropBox = styled.div<IHeaderStyleProps>`
     gap: 20px;
   }
   gap: 5px;
-
   padding: 15px;
   background-color: ${({ theme }) => theme.colors.grey2};
-
   @media (min-width: 720px) {
     display: flex;
     position: unset;
-    top: 0;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    height: 50px;
+    div {
+      gap: 10px;
+      width: fit-content;
+    }
   }
 `;

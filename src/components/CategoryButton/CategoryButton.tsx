@@ -1,8 +1,13 @@
 import React from "react";
+import { BiCategory } from "react-icons/bi";
 import { StyledButton } from "./style";
 
 const CategoryButton = () => {
-  return <StyledButton>Categorias</StyledButton>;
+  return (
+    <StyledButton>
+      <BiCategory /> Categorias
+    </StyledButton>
+  );
 };
 
 export default CategoryButton;

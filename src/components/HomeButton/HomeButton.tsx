@@ -1,8 +1,13 @@
 import React from "react";
-import { StyledButton } from "./style";
+import { StyledLink } from "./style";
+import { BiHome } from "react-icons/bi";
 
 const HomeButton = () => {
-  return <StyledButton>Home</StyledButton>;
+  return (
+    <StyledLink to="/dashboard">
+      Home <BiHome />
+    </StyledLink>
+  );
 };
 
 export default HomeButton;
