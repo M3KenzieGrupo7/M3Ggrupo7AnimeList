@@ -1,7 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../../services/api";
-import { IFavoriteAnimes } from "../AnimesFavoritesContext/type";
 import {
   IDataUser,
   IDefaultProviderProps,
@@ -11,6 +10,9 @@ import {
   IRegisterFormValues,
   IUser,
 } from "./types";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { AxiosError } from "axios";
 
 interface IUserContext {
   user: IUser | null;
@@ -18,7 +20,6 @@ interface IUserContext {
   registerUser: (formData: IRegisterFormValues) => Promise<void>;
   editUser: (formData: IEditFormValues, idUser: number) => Promise<void>;
   deleteUser: (idUser: number) => Promise<void>;
-  animesFavoritesUser: (id: IIdUser) => Promise<void>;
   userLogout: () => void;
 }
 
@@ -41,7 +42,8 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
         JSON.stringify(response.data.user)
       );
       setUser(response.data.user);
-      //   navigate("/dashboard");
+      toast.success("Login efetuado");
+      setTimeout(()=>navigate('/dashboard'),1300)
     } catch (error) {
       console.log(error);
     }
@@ -89,7 +91,9 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
       );
       //   navigate("/dashboard")
     } catch (error) {
-      console.log(error);
+      const currentError = error as AxiosError
+      console.log(currentError);
+      toast.error(currentError.message)
     }
   };
 
@@ -129,28 +133,6 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
     }
   };
 
-  const animesFavoritesUser = async (id: IIdUser) => {
-    const token = localStorage.getItem("GeekAnimes:@token");
-    if (token) {
-      try {
-        const response = await api.get<IFavoriteAnimes[]>(
-          `/users/${id}/favorites`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        localStorage.setItem(
-          "GeekAnimes:@favorites",
-          JSON.stringify(response.data)
-        );
-        //   navigate("/dashboard");
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
 
   const userLogout = () => {
     setUser(null);
@@ -168,11 +150,22 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
         registerUser,
         editUser,
         deleteUser,
-        animesFavoritesUser,
         userLogout,
       }}
     >
       {children}
+      <ToastContainer
+        position="top-right"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </UserContext.Provider>
   );
 };
