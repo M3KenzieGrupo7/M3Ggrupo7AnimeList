@@ -3,13 +3,11 @@ import React from "react";
 import { StyledInput } from "./style";
 
 type IInputProps = {
-  label: string;
   id: string;
-  errorMessage?: string;
 } & TextFieldProps;
 
-const InputHeader = ({}) => {
-  return <StyledInput></StyledInput>;
+const InputHeader = ({ id, label, placeholder }: IInputProps) => {
+  return <StyledInput placeholder={placeholder}></StyledInput>;
 };
 
 export default InputHeader;
