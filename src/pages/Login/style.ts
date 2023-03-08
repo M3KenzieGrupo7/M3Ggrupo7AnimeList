@@ -13,32 +13,17 @@ display: flex;
 justify-content: center;
 
 .container-infos{
-    background-color:rgb(34, 33, 33, 0.7);
+    background-color:rgb(34, 33, 33);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 54%;
+    height: 67%;
     width: 80%;
     margin: auto;
 
 }
-form{
-    height: 45%;
-    width: 90%;
-    gap: 20px;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 31px;
-}
-form > button{
-  
-padding: 10px;
-background-color: #0EB770;
-border: none;
-border-radius: 8px;
-color: white;
-}
+
 .register-box{
     width: 100%;
     display: flex;

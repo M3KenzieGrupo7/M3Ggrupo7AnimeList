@@ -1,29 +1,39 @@
 import logo from "../../assets/logo70x45.svg";
 import { useNavigate } from "react-router-dom";
 import { StyledMain } from "./style";
+import Welcome from "../../assets/Welcomehome.gif"
 
 const HomePage = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <StyledMain>
-        <div className="void-div"></div>
-      <div>
-      <img src={logo} alt="" />
+      {/* <div className="void-div"></div> */}
       <div className="box-info">
+        <img src={logo} alt="imagem da logo da plataforma" />
+        <div >
+          <h2>
+            Bem vindo a Geek Animes, aqui você pode criar suas próprias listas
+            de seus animes de acordo com o seu humor, ou uma lista
+             com seus animes favoritos! Venha ver animes com a Geek
+            Animes
+          </h2>
+        
 
-        <h1>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis
-          doloremque accusamus tenetur modi dignissimos, nulla quo quod
-          laboriosam! Error excepturi molestiae maiores iure, eius provident.
-          Illo doloribus dolorem modi debitis!
-        </h1>
-      </div>
-     
-      <div className="button-box">
-        <button className="login-btn" onClick={()=> navigate('/login')}>Login</button>
-        <button className="register-btn" onClick={()=> navigate('/register')}>Cadastr-se</button>
+          <img className="gif-img" src={Welcome} alt="" />
+ 
+        </div>
 
+        <div className="button-box">
+          <button className="login-btn" onClick={() => navigate("/login")}>
+            Login
+          </button>
+          <button
+            className="register-btn"
+            onClick={() => navigate("/register")}
+          >
+            Cadastre-se
+          </button>
         </div>
       </div>
     </StyledMain>

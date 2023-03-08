@@ -5,11 +5,11 @@ import { GlobalStyles } from "./styles/globalStyle";
 import { mainTheme } from "./styles/theme";
 import RouterPages from "./Routes";
 function App() {
+  
   return (
     <>
       <GlobalStyles />
       <div className="App">
-      
         <RouterPages/>
       </div>
     </>
