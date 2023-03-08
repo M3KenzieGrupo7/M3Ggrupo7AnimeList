@@ -11,7 +11,11 @@ export interface IUser {
     avatar: string;
     id: number;
 }
-
+export interface IFavoriteAnime{
+    userId: number;
+    animesIds: number[];
+    id?: number;
+}
 export interface IDataUser {
     accessToken: string;
     user: IUser;
@@ -23,7 +27,7 @@ export interface IDefaultProviderProps {
 export interface IRegisterFormValues {
     name: string;
     nickname: string;
-    avatar: string;
+    background: string;
     email: string;
     password: string;
     repeatPassword?: string;

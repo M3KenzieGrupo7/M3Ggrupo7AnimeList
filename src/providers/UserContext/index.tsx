@@ -6,11 +6,15 @@ import {
   IDataUser,
   IDefaultProviderProps,
   IEditFormValues,
+  IFavoriteAnime,
   IIdUser,
   ILoginFormData,
   IRegisterFormValues,
   IUser,
 } from "./types";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { AxiosError } from "axios";
 
 interface IUserContext {
   user: IUser | null;
@@ -39,7 +43,8 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
         JSON.stringify(response.data.user)
       );
       setUser(response.data.user);
-      //   navigate("/dashboard");
+      toast.success("Login efetuado");
+      setTimeout(()=>navigate('/dashboard'),1300)
     } catch (error) {
       console.log(error);
     }
@@ -81,9 +86,13 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
         "GeekAnimes:@user",
         JSON.stringify(response.data.user)
       );
-      //   navigate("/dashboard")
+      toast.success("Conta criada com sucesso!")
+        setTimeout(()=>navigate('/login'),1500)
+      
     } catch (error) {
-      console.log(error);
+      const currentError = error as AxiosError
+      console.log(currentError);
+      toast.error(currentError.message)
     }
   };
 
@@ -127,7 +136,7 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
     const token = localStorage.getItem("GeekAnimes:@token");
     if (token) {
       try {
-        const response = await api.get<IFavoriteAnimes[]>(
+        const response = await api.get<IFavoriteAnime[]>(
           `/users/${id}/favorites`,
           {
             headers: {
@@ -154,9 +163,22 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
         registerUser,
         deleteUser,
         animesFavoritesUser,
+    
       }}
     >
       {children}
+      <ToastContainer
+        position="top-right"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </UserContext.Provider>
   );
 };
