@@ -3,7 +3,7 @@ export interface ILoginFormData {
     password: string;
 }
 
-export interface IUser{
+export interface IUser {
     email: string;
     name: string;
     password?: number;
@@ -11,12 +11,16 @@ export interface IUser{
     avatar: string;
     id: number;
 }
-
+export interface IFavoriteAnime{
+    userId: number;
+    animesIds: number[];
+    id?: number;
+}
 export interface IDataUser {
     accessToken: string;
     user: IUser;
 }
-export interface IDefaultProviderProps{
+export interface IDefaultProviderProps {
     children: React.ReactNode;
 }
 
@@ -41,20 +45,6 @@ export interface IEditFormValues {
 export interface IIdUser {
     id: number;
 }
-// {
-//     "book": "As aventuras de ...",
-//     "author": "hristopher Paolini",
-//     "year": 2022,
-//     "ilustrador": "John Jude Palencar",
-//     "userId": 4,
-//     "id": 3
-// }
 
-export interface IFavoriteAnime{
-    book: string;
-    author: string;
-    year: number;
-    ilustrador: string;
-    userId: number;
-    id: number;
-}
+
+

@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../../services/api";
+import { IFavoriteAnimes } from "../AnimesFavoritesContext/type";
 import {
   IDataUser,
   IDefaultProviderProps,
@@ -162,6 +163,7 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
         registerUser,
         deleteUser,
         animesFavoritesUser,
+    
       }}
     >
       {children}
