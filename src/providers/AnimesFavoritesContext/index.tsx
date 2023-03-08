@@ -20,6 +20,29 @@ export const AnimeFavoriteContext = createContext({} as IAnimeFavoriteContext);
 export const AnimeFavoriteProvider = ({ children }: IDefaultProviderProps) => {
   const [idAnimesFavorites, setIdAnimesFavorites] = useState<IIdUser[]>([]);
 
+  const animesFavoritesUser = async (id: IIdUser) => {
+    const token = localStorage.getItem("GeekAnimes:@token");
+    if (token) {
+      try {
+        const response = await api.get<IFavoriteAnimes[]>(
+          `/users/${id}/favorites`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        localStorage.setItem(
+          "GeekAnimes:@favorites",
+          JSON.stringify(response.data)
+        );
+        //   navigate("/dashboard");
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
   const animeFavoriteRegister = async (formData: IFavoriteAnimes) => {
     const token = localStorage.getItem("GeekAnimes:@token");
     if (token) {
