@@ -56,5 +56,7 @@ export const HeaderDropBox = styled.div<IHeaderStyleProps>`
 
   @media (min-width: 720px) {
     display: flex;
+    position: unset;
+    top: 0;
   }
 `;
