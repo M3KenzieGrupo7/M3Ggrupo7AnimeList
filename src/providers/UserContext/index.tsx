@@ -16,8 +16,10 @@ interface IUserContext {
   user: IUser | null;
   loginUser: (formData: ILoginFormData) => Promise<void>;
   registerUser: (formData: IRegisterFormValues) => Promise<void>;
+  editUser: (formData: IEditFormValues, idUser: number) => Promise<void>;
   deleteUser: (idUser: number) => Promise<void>;
   animesFavoritesUser: (id: IIdUser) => Promise<void>;
+  userLogout: () => void;
 }
 
 export const UserContext = createContext({} as IUserContext);
@@ -80,6 +82,10 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
       localStorage.setItem(
         "GeekAnimes:@user",
         JSON.stringify(response.data.user)
+      );
+      localStorage.setItem(
+        "GeekAnimes:@idUser",
+        JSON.stringify(response.data.user.id)
       );
       //   navigate("/dashboard")
     } catch (error) {
@@ -146,14 +152,24 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
     }
   };
 
+  const userLogout = () => {
+    setUser(null);
+    localStorage.removeItem("GeekAnimes:@token");
+    localStorage.removeItem("GeekAnimes:@idUser");
+    localStorage.removeItem("GeekAnimes:@user");
+    navigate("/");
+  };
+
   return (
     <UserContext.Provider
       value={{
         loginUser,
         user,
         registerUser,
+        editUser,
         deleteUser,
         animesFavoritesUser,
+        userLogout,
       }}
     >
       {children}
