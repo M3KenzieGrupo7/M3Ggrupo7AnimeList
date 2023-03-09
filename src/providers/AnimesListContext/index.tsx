@@ -67,7 +67,7 @@ export const AnimesListProvider = ({ children }: IDefaultProviderProps) => {
 
   const addAnimeToListFavorite = (animeToAdd: IAnimeList) => {
     if (listAnimesFavorite.includes(animeToAdd)) {
-      toast.warn("Este produto já foi adicionado à lista de favoritos");
+      toast.warn("Este anime já foi adicionado à lista de favoritos");
     } else {
       toast.success("Anime adicionado à lista de favoritos");
       setListAnimesFavorite([...listAnimesFavorite, animeToAdd]);
