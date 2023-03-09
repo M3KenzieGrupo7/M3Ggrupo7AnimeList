@@ -15,7 +15,16 @@ const RouterPages = () => (
     <Route path="/dashboard" element={<DashBoard />} />
     <Route path="/profile" element={<UserProfile />}>
       <Route index element={<DisplayCustomLists />} />
-      <Route path="customList/:id" element={<DisplayAnimesCustomList />} />
+      <Route
+        path="customList/:id/:idslist"
+        element={<DisplayAnimesCustomList />}
+      />
+      <Route path="customList/:id/" element={<DisplayAnimesCustomList />} />
+    </Route>
+    <Route path="/user/:id" element={<UserProfile />}>
+      <Route index element={<DisplayCustomLists />} />
+      <Route path=":idslist" element={<DisplayAnimesCustomList />} />
+      <Route path="customList/:id/" element={<DisplayAnimesCustomList />} />
     </Route>
   </Routes>
 );

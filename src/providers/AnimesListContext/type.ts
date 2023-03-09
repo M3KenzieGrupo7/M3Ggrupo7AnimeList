@@ -5,5 +5,5 @@ export interface IAnimeList {
   genre: string[];
   author: string;
   synopsis: string;
-  id?: number;
+  id: number;
 }

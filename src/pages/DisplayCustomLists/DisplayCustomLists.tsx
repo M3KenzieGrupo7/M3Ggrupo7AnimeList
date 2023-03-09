@@ -1,19 +1,41 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { CustomListContext } from "../../providers/ListCustomContext";
+import ModalCreateList from "../../components/ModalCreateList/ModalCreateList";
+import { CustomListContext } from "../../providers/ListCustom";
 import { UserContext } from "../../providers/UserContext";
+import { StyledDivList, StyledLink } from "./style";
 
 const DisplayCustomLists = () => {
-  const { listsCustom, getListsCustom } = useContext(CustomListContext);
+  const { listsCustom, getSpecificListsCustom } = useContext(CustomListContext);
   const { user } = useContext(UserContext);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  getListsCustom(user?.id || 0);
+  useEffect(() => {
+    console.log("passou aqui");
 
+    getSpecificListsCustom(
+      user?.id || Number(localStorage.getItem("GeekAnimes:@idUser"))
+    );
+  }, []);
   return (
     <>
-      {listsCustom.map(({ name, animesIds, id }) => {
-        return <Link to={`/profile/customList/${id}`}>{name}</Link>;
-      })}
+      <button
+        onClick={() => {
+          setModalIsOpen(true);
+        }}
+      >
+        Criar nova Lista
+      </button>
+      <ModalCreateList isOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} />
+      <StyledDivList>
+        {listsCustom.map(({ name, animesIds, id }) => {
+          return (
+            <StyledLink to={`/profile/customList/${id}/${animesIds}`}>
+              {name}
+            </StyledLink>
+          );
+        })}
+      </StyledDivList>
     </>
   );
 };
