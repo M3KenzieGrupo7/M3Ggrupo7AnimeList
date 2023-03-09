@@ -1,11 +1,10 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { api } from "../../services/api";
 import { IDefaultProviderProps } from "../UserContext/types";
 import { IAnimeList } from "./type";
 
 interface IAnimesContext {
-  listAnimes: () => Promise<void>;
-  animes: IAnimeList[] | null;
+  animes: IAnimeList[];
   listAnimesRegister: (formData: IAnimeList) => Promise<void>;
   searchAnimeList: (name: string) => Promise<void>;
   animeFound: IAnimeList | null;
@@ -14,23 +13,26 @@ interface IAnimesContext {
 export const AnimesListContext = createContext({} as IAnimesContext);
 
 export const AnimesListProvider = ({ children }: IDefaultProviderProps) => {
-  const [animes, setAnimes] = useState<IAnimeList[] | null>(null);
+  const [animes, setAnimes] = useState<IAnimeList[]>([]);
   const [animeFound, setAnimeFound] = useState<IAnimeList | null>(null);
 
-  const listAnimes = async () => {
-    try {
-      const response = await api.get<IAnimeList[]>(`/animes`);
-      setAnimes(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+  useEffect(() => {
+    const listAnimes = async () => {
+      try { 
+        const response = await api.get<IAnimeList[]>(`/animes`);
+        setAnimes(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    listAnimes()
+  }, [])
+  
   const searchAnimeList = async (nameAnime: string) => {
     try {
       const response = await api.get<IAnimeList>(`/animes?`, {
         params: {
-          name: nameAnime,
+          name_like: nameAnime,
         },
       });
       setAnimeFound(response.data);
@@ -58,7 +60,6 @@ export const AnimesListProvider = ({ children }: IDefaultProviderProps) => {
   return (
     <AnimesListContext.Provider
       value={{
-        listAnimes,
         animes,
         listAnimesRegister,
         searchAnimeList,
