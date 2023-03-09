@@ -1,10 +1,11 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { api } from "../../services/api";
 import { IDefaultProviderProps } from "../UserContext/types";
 import { ICustomList, ICustomListEdit, IIdAnimeCustomList } from "./type";
 
 interface ICustomListContext {
-  listCustom: ICustomList[];
+  listsCustom: ICustomList[];
+  getListsCustom: (userID: number) => void;
   animesCustomList: () => Promise<void>;
   animeListCustomRegister: (formData: ICustomList) => Promise<void>;
   animeListCustomEdit: (
@@ -17,7 +18,27 @@ interface ICustomListContext {
 export const CustomListContext = createContext({} as ICustomListContext);
 
 export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
-  const [listCustom, setListCustom] = useState<ICustomList[]>([]);
+  const [listsCustom, setListsCustom] = useState<ICustomList[]>([]);
+
+  const getListsCustom = async (userID: number) => {
+    const token = localStorage.getItem("GeekAnimes:@token");
+
+    if (token) {
+      try {
+        const response = await api.get<ICustomList[]>(
+          `/customlist?userId=${userID}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setListsCustom(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
   const animesCustomList = async () => {
     const token = localStorage.getItem("GeekAnimes:@token");
@@ -28,8 +49,8 @@ export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
             Authorization: `Bearer ${token}`,
           },
         });
-        //   navigate("/dashboard");
-        setListCustom(response.data);
+        console.log("ANIMERES", response);
+        setListsCustom(response.data);
       } catch (error) {
         console.log(error);
       }
@@ -46,7 +67,7 @@ export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
           },
         });
         //   navigate("/dashboard");
-        setListCustom([...listCustom, response.data]);
+        setListsCustom([...listsCustom, response.data]);
       } catch (error) {
         console.log(error);
       }
@@ -95,7 +116,8 @@ export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
   return (
     <CustomListContext.Provider
       value={{
-        listCustom,
+        listsCustom,
+        getListsCustom,
         animesCustomList,
         animeListCustomRegister,
         animeListCustomEdit,

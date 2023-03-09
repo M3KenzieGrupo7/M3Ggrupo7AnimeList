@@ -5,14 +5,17 @@ import { ThemeProvider } from "styled-components";
 import { UserProvider } from "./providers/UserContext";
 import { mainTheme } from "./styles/theme";
 import { BrowserRouter } from "react-router-dom";
+import { CustomListProvider } from "./providers/ListCustomContext";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <BrowserRouter>
       <UserProvider>
-        <ThemeProvider theme={mainTheme}>
-          <App />
-        </ThemeProvider>
+        <CustomListProvider>
+          <ThemeProvider theme={mainTheme}>
+            <App />
+          </ThemeProvider>
+        </CustomListProvider>
       </UserProvider>
     </BrowserRouter>
   </React.StrictMode>

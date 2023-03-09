@@ -17,10 +17,6 @@ const Header = () => {
 
   const { user } = useContext(UserContext);
 
-  useEffect(() => {
-    console.log(user);
-  }, []);
-
   return (
     <StyledHeader>
       <img src={logo} alt="" />
