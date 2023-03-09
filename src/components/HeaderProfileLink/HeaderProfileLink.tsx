@@ -9,7 +9,7 @@ interface IProfileLinkProps {
 }
 const HeaderProfileLink = ({ nickname, avatar }: IProfileLinkProps) => {
   return (
-    <StyledPerfil>
+    <StyledPerfil to="/profile">
       <img src={avatar} alt="Avatar" />
       <p>{nickname}</p>
     </StyledPerfil>

@@ -5,7 +5,7 @@ import { BiHome } from "react-icons/bi";
 const HomeButton = () => {
   return (
     <StyledLink to="/dashboard">
-      Home <BiHome />
+      <BiHome /> Home
     </StyledLink>
   );
 };

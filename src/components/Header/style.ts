@@ -3,11 +3,15 @@ import styled from "styled-components";
 interface IHeaderStyleProps {
   isOpen: true | false;
 }
-
+export const StyledBackHeader = styled.div`
+  width: 100%;
+  background-color: ${({ theme }) => theme.colors.grey2};
+`;
 export const StyledHeader = styled.header`
   width: 100%;
+  max-width: 1024px;
+  margin: 0 auto;
   height: 80px;
-  background-color: ${({ theme }) => theme.colors.grey2};
   display: flex;
   justify-content: space-between;
   padding: 15px;
@@ -17,6 +21,7 @@ export const StyledHeader = styled.header`
   @media (min-width: 720px) {
   }
 `;
+
 export const HeaderDropBox = styled.div<IHeaderStyleProps>`
   display: ${({ isOpen }) => (isOpen ? "flex" : "none")};
   @keyframes open {
