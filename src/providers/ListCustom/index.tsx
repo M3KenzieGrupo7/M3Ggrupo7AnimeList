@@ -1,17 +1,16 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { api } from "../../services/api";
 import { IDefaultProviderProps } from "../UserContext/types";
 import { ICustomList, ICustomListEdit, IIdAnimeCustomList } from "./type";
 
 interface ICustomListContext {
   listCustom: ICustomList[];
-  animesCustomList: () => Promise<void>;
   animeListCustomRegister: (formData: ICustomList) => Promise<void>;
   animeListCustomEdit: (
     formData: ICustomListEdit,
-    idAnime: IIdAnimeCustomList
+    idAnime: number
   ) => Promise<void>;
-  animeFavoriteDelete: (idAnime: IIdAnimeCustomList) => Promise<void>;
+  animeFavoriteDelete: (idAnime: number) => Promise<void>;
 }
 
 export const CustomListContext = createContext({} as ICustomListContext);
@@ -19,21 +18,28 @@ export const CustomListContext = createContext({} as ICustomListContext);
 export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
   const [listCustom, setListCustom] = useState<ICustomList[]>([]);
 
-  const animesCustomList = async () => {
-    const token = localStorage.getItem("GeekAnimes:@token");
-    if (token) {
-      try {
-        const response = await api.get<ICustomList[]>(`/customlist`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        //   navigate("/dashboard");
-        setListCustom(response.data);
-      } catch (error) {
-        console.log(error);
+  useEffect(() => {
+    const animesCustomList = async () => {
+      const token = localStorage.getItem("GeekAnimes:@token");
+      if (token) {
+        try {
+          const response = await api.get<ICustomList[]>(`/customlist`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          //   navigate("/dashboard");
+          setListCustom(response.data);
+        } catch (error) {
+          console.log(error);
+        }
       }
-    }
+    };
+    animesCustomList();
+  }, []);
+
+  const data = {
+    name: "Alternativa",
   };
 
   const animeListCustomRegister = async (formData: ICustomList) => {
@@ -55,7 +61,7 @@ export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
 
   const animeListCustomEdit = async (
     formData: ICustomListEdit,
-    idAnime: IIdAnimeCustomList
+    idAnime: number
   ) => {
     const token = localStorage.getItem("GeekAnimes:@token");
     if (token) {
@@ -76,7 +82,7 @@ export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
     }
   };
 
-  const animeFavoriteDelete = async (idAnime: IIdAnimeCustomList) => {
+  const animeFavoriteDelete = async (idAnime: number) => {
     const token = localStorage.getItem("GeekAnimes:@token");
     if (token) {
       try {
@@ -96,7 +102,6 @@ export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
     <CustomListContext.Provider
       value={{
         listCustom,
-        animesCustomList,
         animeListCustomRegister,
         animeListCustomEdit,
         animeFavoriteDelete,

@@ -11,7 +11,6 @@ export interface IIdAnimeCustomList {
 }
 
 export interface ICustomListEdit {
-  userId: number;
   name?: string;
   animesIds?: number[];
   amountAnimes?: number;

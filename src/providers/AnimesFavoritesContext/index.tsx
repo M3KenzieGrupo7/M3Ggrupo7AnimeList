@@ -8,11 +8,9 @@ interface IAnimeFavoriteContext {
     formData: IFavoriteAnimes,
     id: IIdUser
   ) => Promise<void>;
-  animeFavoriteEdit: (
-    formData: IFavoriteAnimes,
-    idAnime: IIdFavoritesAnime
-  ) => Promise<void>;
-  animeFavoriteDelete: (idAnime: IIdFavoritesAnime) => Promise<void>;
+  animeFavoriteEdit: (formData: IFavoriteAnimes, idAnime: number) => Promise<void>;
+  animeFavoriteDelete: (idAnime: number) => Promise<void>;
+  animesFavoritesUser: (id: IIdUser) => Promise<void>;
 }
 
 export const AnimeFavoriteContext = createContext({} as IAnimeFavoriteContext);
@@ -20,12 +18,13 @@ export const AnimeFavoriteContext = createContext({} as IAnimeFavoriteContext);
 export const AnimeFavoriteProvider = ({ children }: IDefaultProviderProps) => {
   const [idAnimesFavorites, setIdAnimesFavorites] = useState<IIdUser[]>([]);
 
-  const animesFavoritesUser = async (id: IIdUser) => {
+  const animesFavoritesUser = async () => {
     const token = localStorage.getItem("GeekAnimes:@token");
+    const idUser: number | null = JSON.parse(localStorage.getItem('GeekAnimes:@idUser') || "null");
     if (token) {
       try {
         const response = await api.get<IFavoriteAnimes[]>(
-          `/users/${id}/favorites`,
+          `/users/${idUser}/favorites`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -37,11 +36,17 @@ export const AnimeFavoriteProvider = ({ children }: IDefaultProviderProps) => {
           JSON.stringify(response.data)
         );
         //   navigate("/dashboard");
+        console.log(response.data)
       } catch (error) {
         console.log(error);
       }
     }
   };
+
+  const data = {
+    "animesIds": [80, 90, 100],
+    "userId": 1
+  }
 
   const animeFavoriteRegister = async (formData: IFavoriteAnimes) => {
     const token = localStorage.getItem("GeekAnimes:@token");
@@ -63,9 +68,10 @@ export const AnimeFavoriteProvider = ({ children }: IDefaultProviderProps) => {
     }
   };
 
+
   const animeFavoriteEdit = async (
     formData: IFavoriteAnimes,
-    idAnime: IIdFavoritesAnime
+    idAnime: number
   ) => {
     const token = localStorage.getItem("GeekAnimes:@token");
     if (token) {
@@ -86,7 +92,8 @@ export const AnimeFavoriteProvider = ({ children }: IDefaultProviderProps) => {
     }
   };
 
-  const animeFavoriteDelete = async (idAnime: IIdFavoritesAnime) => {
+
+  const animeFavoriteDelete = async (idAnime: number) => {
     const token = localStorage.getItem("GeekAnimes:@token");
     if (token) {
       try {
@@ -108,6 +115,7 @@ export const AnimeFavoriteProvider = ({ children }: IDefaultProviderProps) => {
         animeFavoriteRegister,
         animeFavoriteEdit,
         animeFavoriteDelete,
+        animesFavoritesUser,
       }}
     >
       {children}
