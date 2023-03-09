@@ -7,3 +7,9 @@ export interface IAnimeList {
   synopsis: string;
   id: number;
 }
+
+export interface IAnimeListFavorite {
+  name: string;
+  urlImage: string;
+  id: number;
+}
