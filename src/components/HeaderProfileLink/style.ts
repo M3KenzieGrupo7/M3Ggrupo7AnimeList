@@ -1,6 +1,7 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export const StyledPerfil = styled.div`
+export const StyledPerfil = styled(Link)`
   width: 100%;
   display: flex;
   align-items: center;
@@ -8,6 +9,7 @@ export const StyledPerfil = styled.div`
   padding: 15px;
   height: 80px;
   box-sizing: border-box;
+  gap: 10px;
   img {
     width: 50px;
     height: 50px;
@@ -21,7 +23,6 @@ export const StyledPerfil = styled.div`
 
   @media (min-width: 720px) {
     display: flex;
-    width: 100px;
     border-bottom: none;
   }
 `;

@@ -9,5 +9,5 @@ export interface IIdFavoritesAnime {
 export interface IFavoriteAnimes {
   userId: number;
   animesIds: number[];
-  id?: number;
+  id: number;
 }

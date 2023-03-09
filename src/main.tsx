@@ -5,9 +5,9 @@ import { ThemeProvider } from "styled-components";
 import { UserProvider } from "./providers/UserContext";
 import { mainTheme } from "./styles/theme";
 import { BrowserRouter } from "react-router-dom";
+import { CustomListProvider } from "./providers/ListCustom";
 import { AnimesListProvider } from "./providers/AnimesListContext";
 import { AnimeFavoriteProvider } from "./providers/AnimesFavoritesContext";
-import { CustomListProvider } from "./providers/ListCustom";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>

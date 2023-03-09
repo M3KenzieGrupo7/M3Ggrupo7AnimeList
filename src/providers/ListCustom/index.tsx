@@ -1,48 +1,99 @@
 import { createContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { api } from "../../services/api";
+import { IAnimeList } from "../AnimesListContext/type";
 import { IDefaultProviderProps } from "../UserContext/types";
-import { ICustomList, ICustomListEdit, IIdAnimeCustomList } from "./type";
+import {
+  ICustomList,
+  ICustomListEdit,
+  ICustomListRegister,
+  IIdAnimeCustomList,
+} from "./type";
 
 interface ICustomListContext {
-  listCustom: ICustomList[];
-  animeListCustomRegister: (formData: ICustomList) => Promise<void>;
+  listsCustom: ICustomList[];
+  getSpecificListsCustom: (userID: number) => void;
+  animesCustomList: () => Promise<void>;
+  animeListCustomRegister: (formData: ICustomListRegister) => Promise<boolean>;
   animeListCustomEdit: (
     formData: ICustomListEdit,
     idAnime: number
   ) => Promise<void>;
   animeFavoriteDelete: (idAnime: number) => Promise<void>;
+  getSpecificsAnimes: (listID: number[]) => Promise<IAnimeList[]>;
 }
 
 export const CustomListContext = createContext({} as ICustomListContext);
 
 export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
-  const [listCustom, setListCustom] = useState<ICustomList[]>([]);
+  const [listsCustom, setListsCustom] = useState<ICustomList[]>([]);
 
-  useEffect(() => {
-    const animesCustomList = async () => {
-      const token = localStorage.getItem("GeekAnimes:@token");
-      if (token) {
-        try {
-          const response = await api.get<ICustomList[]>(`/customlist`, {
+  const getSpecificListsCustom = async (userID: number) => {
+    const token = localStorage.getItem("GeekAnimes:@token");
+
+    if (token) {
+      try {
+        const response = await api.get<ICustomList[]>(
+          `/customlist?userId=${userID}`,
+          {
             headers: {
               Authorization: `Bearer ${token}`,
             },
-          });
-          //   navigate("/dashboard");
-          setListCustom(response.data);
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    };
-    animesCustomList();
-  }, []);
+          }
+        );
+        console.log("deu certo", response.data);
+        setListsCustom(response.data);
+      } catch (error) {
+        console.log("erro aqui");
 
-  const data = {
-    name: "Alternativa",
+        console.log(error);
+      }
+    }
   };
 
-  const animeListCustomRegister = async (formData: ICustomList) => {
+  const getSpecificsAnimes = async (listID: number[]) => {
+    const token = localStorage.getItem("GeekAnimes:@token");
+
+    let filter = "";
+
+    listID.forEach((id) => {
+      filter += `&id=${id}`;
+    });
+
+    if (token) {
+      try {
+        const response = await api.get<IAnimeList[]>(`/animes?${filter}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        return response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    return [];
+  };
+
+  const animesCustomList = async () => {
+    const token = localStorage.getItem("GeekAnimes:@token");
+    if (token) {
+      try {
+        const response = await api.get<ICustomList[]>(`/customlist`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setListsCustom(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    animesCustomList();
+  };
+
+  const animeListCustomRegister = async (formData: ICustomListRegister) => {
     const token = localStorage.getItem("GeekAnimes:@token");
     if (token) {
       try {
@@ -52,11 +103,15 @@ export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
           },
         });
         //   navigate("/dashboard");
-        setListCustom([...listCustom, response.data]);
+        setListsCustom([...listsCustom, response.data]);
+        toast.success("Lista Cadastrada com Sucesso!");
+        return true;
       } catch (error) {
         console.log(error);
+        return false;
       }
     }
+    return false;
   };
 
   const animeListCustomEdit = async (
@@ -101,10 +156,13 @@ export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
   return (
     <CustomListContext.Provider
       value={{
-        listCustom,
+        listsCustom,
+        getSpecificListsCustom,
+        animesCustomList,
         animeListCustomRegister,
         animeListCustomEdit,
         animeFavoriteDelete,
+        getSpecificsAnimes,
       }}
     >
       {children}
