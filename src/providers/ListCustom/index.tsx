@@ -10,9 +10,9 @@ interface ICustomListContext {
   animeListCustomRegister: (formData: ICustomList) => Promise<void>;
   animeListCustomEdit: (
     formData: ICustomListEdit,
-    idAnime: IIdAnimeCustomList
+    idAnime: number
   ) => Promise<void>;
-  animeFavoriteDelete: (idAnime: IIdAnimeCustomList) => Promise<void>;
+  animeFavoriteDelete: (idAnime: number) => Promise<void>;
 }
 
 export const CustomListContext = createContext({} as ICustomListContext);
@@ -49,12 +49,17 @@ export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log("ANIMERES", response);
+
         setListsCustom(response.data);
       } catch (error) {
         console.log(error);
       }
     }
+    animesCustomList();
+  };
+
+  const data = {
+    name: "Alternativa",
   };
 
   const animeListCustomRegister = async (formData: ICustomList) => {
@@ -76,7 +81,7 @@ export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
 
   const animeListCustomEdit = async (
     formData: ICustomListEdit,
-    idAnime: IIdAnimeCustomList
+    idAnime: number
   ) => {
     const token = localStorage.getItem("GeekAnimes:@token");
     if (token) {
@@ -97,7 +102,7 @@ export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
     }
   };
 
-  const animeFavoriteDelete = async (idAnime: IIdAnimeCustomList) => {
+  const animeFavoriteDelete = async (idAnime: number) => {
     const token = localStorage.getItem("GeekAnimes:@token");
     if (token) {
       try {

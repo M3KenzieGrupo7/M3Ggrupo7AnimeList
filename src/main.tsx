@@ -5,17 +5,23 @@ import { ThemeProvider } from "styled-components";
 import { UserProvider } from "./providers/UserContext";
 import { mainTheme } from "./styles/theme";
 import { BrowserRouter } from "react-router-dom";
-import { CustomListProvider } from "./providers/ListCustomContext";
+import { CustomListProvider } from "./providers/ListCustom";
+import { AnimesListProvider } from "./providers/AnimesListContext";
+import { AnimeFavoriteProvider } from "./providers/AnimesFavoritesContext";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <BrowserRouter>
       <UserProvider>
-        <CustomListProvider>
-          <ThemeProvider theme={mainTheme}>
-            <App />
-          </ThemeProvider>
-        </CustomListProvider>
+        <AnimesListProvider>
+          <CustomListProvider>
+            <AnimeFavoriteProvider>
+              <ThemeProvider theme={mainTheme}>
+                <App />
+              </ThemeProvider>
+            </AnimeFavoriteProvider>
+          </CustomListProvider>
+        </AnimesListProvider>
       </UserProvider>
     </BrowserRouter>
   </React.StrictMode>
