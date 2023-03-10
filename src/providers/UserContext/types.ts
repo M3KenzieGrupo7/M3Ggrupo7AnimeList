@@ -12,6 +12,14 @@ export interface IUser {
   background: string;
   id: number;
 }
+export interface IUser2 {
+  email: string;
+  name: string;
+  nickname: string;
+  img: string;
+  background: string;
+  id: number;
+}
 export interface IFavoriteAnime {
   userId: number;
   animesIds: number[];

@@ -1,13 +1,19 @@
 import { TextFieldProps } from "@mui/material";
 import React from "react";
 import { StyledInput } from "./style";
+import { FieldError, UseFormRegisterReturn } from "react-hook-form";
 
-type IInputProps = {
+interface IInputProps {
   id: string;
-} & TextFieldProps;
+  placeholder: string;
+  type: string;
+  register: UseFormRegisterReturn;
+}
 
-const InputHeader = ({ id, label, placeholder }: IInputProps) => {
-  return <StyledInput placeholder={placeholder}></StyledInput>;
+const InputHeader = ({ id, placeholder, register, type }: IInputProps) => {
+  return (
+    <StyledInput type={type} placeholder={placeholder} id={id} {...register} />
+  );
 };
 
 export default InputHeader;

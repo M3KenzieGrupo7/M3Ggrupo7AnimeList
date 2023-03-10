@@ -8,7 +8,10 @@ interface IAnimeFavoriteContext {
     formData: IFavoriteAnimes,
     id: IIdUser
   ) => Promise<void>;
-  animeFavoriteEdit: (formData: IFavoriteAnimes, idAnime: number) => Promise<void>;
+  animeFavoriteEdit: (
+    formData: IFavoriteAnimes,
+    idAnime: number
+  ) => Promise<void>;
   animeFavoriteDelete: (idAnime: number) => Promise<void>;
   animesFavoritesUser: (id: IIdUser) => Promise<void>;
 }
@@ -20,7 +23,9 @@ export const AnimeFavoriteProvider = ({ children }: IDefaultProviderProps) => {
 
   const animesFavoritesUser = async () => {
     const token = localStorage.getItem("GeekAnimes:@token");
-    const idUser: number | null = JSON.parse(localStorage.getItem('GeekAnimes:@idUser') || "null");
+    const idUser: number | null = JSON.parse(
+      localStorage.getItem("GeekAnimes:@idUser") || "null"
+    );
     if (token) {
       try {
         const response = await api.get<IFavoriteAnimes[]>(
@@ -35,18 +40,11 @@ export const AnimeFavoriteProvider = ({ children }: IDefaultProviderProps) => {
           "GeekAnimes:@favorites",
           JSON.stringify(response.data)
         );
-        //   navigate("/dashboard");
-        console.log(response.data)
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
   };
-
-  const data = {
-    "animesIds": [80, 90, 100],
-    "userId": 1
-  }
 
   const animeFavoriteRegister = async (formData: IFavoriteAnimes) => {
     const token = localStorage.getItem("GeekAnimes:@token");
@@ -63,11 +61,10 @@ export const AnimeFavoriteProvider = ({ children }: IDefaultProviderProps) => {
         );
         //   navigate("/dashboard");
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
   };
-
 
   const animeFavoriteEdit = async (
     formData: IFavoriteAnimes,
@@ -87,11 +84,10 @@ export const AnimeFavoriteProvider = ({ children }: IDefaultProviderProps) => {
         );
         //   navigate("/dashboard");
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
   };
-
 
   const animeFavoriteDelete = async (idAnime: number) => {
     const token = localStorage.getItem("GeekAnimes:@token");
@@ -104,7 +100,7 @@ export const AnimeFavoriteProvider = ({ children }: IDefaultProviderProps) => {
         });
         //   navigate("/dashboard");
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
   };
