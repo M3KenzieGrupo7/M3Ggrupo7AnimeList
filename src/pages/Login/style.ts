@@ -13,7 +13,7 @@ display: flex;
 justify-content: center;
 
 .container-infos{
-    background-color:rgb(34, 33, 33);
+    background-color:${({theme})=> theme.colors.grey};
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -35,7 +35,7 @@ justify-content: center;
 .register-box > button{
 width: 90%;
 padding: 10px;
-background-color: #0F54A0;
+background-color:${({theme})=> theme.colors.colorPrimary};
 border: none;
 border-radius: 8px;
 color: white;
