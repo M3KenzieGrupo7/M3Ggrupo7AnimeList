@@ -5,6 +5,7 @@ export const StyledDivList = styled.div`
   margin-top: 30px;
   width: 100%;
   height: fit-content;
+  min-height: 300px;
   gap: 15px;
   background-color: ${({ theme }) => theme.colors.grey2};
   display: flex;
@@ -30,10 +31,10 @@ export const StyledLink = styled(Link)`
   text-align: center;
   align-items: center;
   justify-content: center;
-  width: 120px;
-  height: 60px;
-  background-color: ${({ theme }) => theme.colors.colorSecundary};
-  color: ${({ theme }) => theme.colors.colorPrimary};
+  width: 150px;
+  height: 50px;
+  background-color: ${({ theme }) => theme.colors.colorPrimary};
+  color: ${({ theme }) => theme.colors.white};
   :hover {
     background-color: ${({ theme }) => theme.colors.colorPrimaryFocus};
     color: ${({ theme }) => theme.colors.white};

@@ -1,10 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import BTNBackProfilePage from "../../components/BTNBackProfilePage/BTNBackProfilePage";
 import CardAnimeUserCustomList from "../../components/CardAnimeUserCustomList/CardAnimeUserCustomList";
 import { IAnimeList } from "../../providers/AnimesListContext/type";
 
 import { CustomListContext } from "../../providers/ListCustom";
-import { AnimeCardsList } from "./style";
+import {
+  AnimeCardsList,
+  StyledBTNDeleteList,
+  StyledHeaderDisplayList,
+} from "./style";
 
 const DisplayAnimesCustomList = () => {
   const { listsCustom, getSpecificsAnimes, customListDelete } =
@@ -24,14 +29,18 @@ const DisplayAnimesCustomList = () => {
   }, []);
   return (
     <>
-      <button
-        onClick={() => {
-          customListDelete(Number(id));
-          navigate("/profile");
-        }}
-      >
-        Excluir Lista
-      </button>
+      <StyledHeaderDisplayList>
+        <StyledBTNDeleteList
+          onClick={() => {
+            customListDelete(Number(id));
+            navigate("/profile");
+          }}
+        >
+          Excluir Lista
+        </StyledBTNDeleteList>
+        <BTNBackProfilePage />
+      </StyledHeaderDisplayList>
+
       <AnimeCardsList>
         {animes?.map(({ name, urlImage, author, eps, genre, synopsis, id }) => (
           <CardAnimeUserCustomList
@@ -48,6 +57,11 @@ const DisplayAnimesCustomList = () => {
             idList={Number(idList)}
           />
         ))}
+        {animes ? null : (
+          <div>
+            <h1>Nenhum Anime Adicionado na Lista :( </h1>
+          </div>
+        )}
       </AnimeCardsList>
     </>
   );
