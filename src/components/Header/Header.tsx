@@ -46,7 +46,7 @@ const Header = () => {
           register={register("name")}
           id="searchBarHeader"
           placeholder="Pesquisar por Anime ou perfil"
-          type="number"
+          type="text"
         />
         <MenuButton
           changeValueButton={changeIsOpen}

@@ -43,9 +43,9 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
       );
       setUser(response.data.user);
       toast.success("Login efetuado");
-      setTimeout(()=>navigate('/dashboard'),1300)
+      setTimeout(() => navigate("/dashboard"), 1300);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -69,7 +69,7 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
           setUser(response.data);
           //   navigate("/dashboard");
         } catch (error) {
-          console.log(error);
+          console.error(error);
         }
       }
     };
@@ -91,9 +91,8 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
       );
         navigate("/dashboard")
     } catch (error) {
-      const currentError = error as AxiosError
-      console.log(currentError);
-      toast.error(currentError.message)
+      const currentError = error as AxiosError;
+      toast.error(currentError.message);
     }
   };
 
@@ -110,7 +109,7 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
         localStorage.setItem("GeekAnimes:@user", JSON.stringify(response.data));
         //   navigate("/dashboard")
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
   };
@@ -129,11 +128,10 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
         localStorage.removeItem("GeekAnimes:@idUser");
           navigate("/")
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
   };
-
 
   const userLogout = () => {
     setUser(null);

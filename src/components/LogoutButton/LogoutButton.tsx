@@ -4,9 +4,12 @@ import { MdLogout } from "react-icons/md";
 import { UserContext } from "../../providers/UserContext";
 
 const LogoutButton = () => {
-  const { userLogout } = useContext(UserContext)
+  const { userLogout } = useContext(UserContext);
   return (
-    <StyledButton onClick={() => {userLogout()}}>
+    <StyledButton
+      onClick={() => {
+        userLogout();
+      }}
       <MdLogout /> Sair
     </StyledButton>
   );
