@@ -89,7 +89,7 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
         "GeekAnimes:@idUser",
         JSON.stringify(response.data.user.id)
       );
-      //   navigate("/dashboard")
+        navigate("/dashboard")
     } catch (error) {
       const currentError = error as AxiosError;
       toast.error(currentError.message);
@@ -125,7 +125,8 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
         });
         localStorage.removeItem("GeekAnimes:@token");
         localStorage.removeItem("GeekAnimes:@user");
-        //   navigate("/dashboard")
+        localStorage.removeItem("GeekAnimes:@idUser");
+          navigate("/")
       } catch (error) {
         console.error(error);
       }
