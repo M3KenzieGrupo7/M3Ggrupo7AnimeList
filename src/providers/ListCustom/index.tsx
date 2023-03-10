@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { api } from "../../services/api";
 import { IAnimeList } from "../AnimesListContext/type";
@@ -15,11 +16,15 @@ interface ICustomListContext {
   getSpecificListsCustom: (userID: number) => void;
   animesCustomList: () => Promise<void>;
   animeListCustomRegister: (formData: ICustomListRegister) => Promise<boolean>;
+  removeAnimeInCustomList: (
+    id: number,
+    newlist: ICustomListEdit
+  ) => Promise<void>;
   animeListCustomEdit: (
     formData: ICustomListEdit,
     idAnime: number
   ) => Promise<void>;
-  animeFavoriteDelete: (idAnime: number) => Promise<void>;
+  customListDelete: (idList: number) => Promise<void>;
   getSpecificsAnimes: (listID: number[]) => Promise<IAnimeList[]>;
 }
 
@@ -41,12 +46,9 @@ export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
             },
           }
         );
-        console.log("deu certo", response.data);
         setListsCustom(response.data);
       } catch (error) {
-        console.log("erro aqui");
-
-        console.log(error);
+        console.error(error);
       }
     }
   };
@@ -69,7 +71,7 @@ export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
         });
         return response.data;
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
     return [];
@@ -87,7 +89,7 @@ export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
 
         setListsCustom(response.data);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
     animesCustomList();
@@ -102,12 +104,11 @@ export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
             Authorization: `Bearer ${token}`,
           },
         });
-        //   navigate("/dashboard");
         setListsCustom([...listsCustom, response.data]);
         toast.success("Lista Cadastrada com Sucesso!");
         return true;
       } catch (error) {
-        console.log(error);
+        console.error(error);
         return false;
       }
     }
@@ -130,25 +131,46 @@ export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
             },
           }
         );
-        //   navigate("/dashboard");
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
   };
 
-  const animeFavoriteDelete = async (idAnime: number) => {
+  const customListDelete = async (idList: number) => {
     const token = localStorage.getItem("GeekAnimes:@token");
     if (token) {
       try {
-        await api.delete(`/customlist/${idAnime}`, {
+        await api.delete(`/customlist/${idList}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        //   navigate("/dashboard");
+        toast.success("Lista Deletada com Sucesso!");
       } catch (error) {
-        console.log(error);
+        console.error(error);
+      }
+    }
+  };
+
+  const removeAnimeInCustomList = async (
+    id: number,
+    newlist: ICustomListEdit
+  ) => {
+    const token = localStorage.getItem("GeekAnimes:@token");
+    if (token) {
+      try {
+        const response = await api.patch<ICustomList>(
+          `/customlist/${id}`,
+          newlist,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+      } catch (error) {
+        console.error(error);
       }
     }
   };
@@ -161,8 +183,9 @@ export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
         animesCustomList,
         animeListCustomRegister,
         animeListCustomEdit,
-        animeFavoriteDelete,
+        customListDelete,
         getSpecificsAnimes,
+        removeAnimeInCustomList,
       }}
     >
       {children}
