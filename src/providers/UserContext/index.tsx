@@ -89,7 +89,8 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
         "GeekAnimes:@idUser",
         JSON.stringify(response.data.user.id)
       );
-        navigate("/")
+      setTimeout(()=>navigate('/login'),1300);
+      toast.success("Registro efetuado");
     } catch (error) {
       const currentError = error as AxiosError;
       toast.error(currentError.message);

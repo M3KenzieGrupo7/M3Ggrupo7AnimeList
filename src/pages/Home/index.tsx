@@ -8,7 +8,7 @@ const HomePage = () => {
 
   return (
     <StyledMain>
-      {/* <div className="void-div"></div> */}
+    
       <div className="box-info">
         <img src={logo} alt="imagem da logo da plataforma" />
         <div >

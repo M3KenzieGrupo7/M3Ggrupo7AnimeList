@@ -21,20 +21,24 @@ z-index: 0;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 26px;
+  
     padding: 3px;
   };
   .button-box{
     flex-direction: initial;
+    display: flex;
+    gap: 10px;
+    width: 92%;
+    margin-top: 14px;
   }
   .register-btn{
-    background-color: #0EB770;
+    background-color: ${({theme})=> theme.colors.colorSucess};
     border: none;
     padding: 10px;
     color: white;
     border-radius: 8px;
     width: 10.12rem;
-    font-size: 1.3rem;
+    
   }
   .box-info{
     background-color: rgba(0, 0, 0, 0.2);
@@ -48,13 +52,13 @@ z-index: 0;
     font-variant: petite-caps;
  }
   .login-btn{
-    background-color: #0F54A0;
+    background-color: ${({theme})=> theme.colors.colorPrimaryFocus};
     border: none;
     padding: 10px;
     color: white;
     border-radius: 8px;
     width: 10.12rem;
-    font-size: 1.3rem;
+    
   }
   @-webkit-keyframes login-btn {
   50% {
@@ -142,6 +146,9 @@ z-index: 0;
       width: 44%;
       background-color:unset;
       padding: 17px;
+    }
+    .login-btn ,.register-btn{
+      font-size: 1.3rem;
     }
   }
 `;
