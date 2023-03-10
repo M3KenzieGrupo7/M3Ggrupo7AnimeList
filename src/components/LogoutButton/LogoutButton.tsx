@@ -10,6 +10,7 @@ const LogoutButton = () => {
       onClick={() => {
         userLogout();
       }}
+    >
       <MdLogout /> Sair
     </StyledButton>
   );
