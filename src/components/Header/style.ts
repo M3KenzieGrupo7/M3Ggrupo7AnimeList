@@ -6,6 +6,8 @@ interface IHeaderStyleProps {
 export const StyledBackHeader = styled.div`
   width: 100%;
   background-color: ${({ theme }) => theme.colors.grey2};
+  position: fixed;
+  top: 0;
 `;
 export const StyledHeader = styled.header`
   width: 100%;

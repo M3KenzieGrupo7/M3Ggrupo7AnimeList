@@ -14,8 +14,20 @@ export const Card = styled.div`
     font-size: ${({ theme }) => theme.fonts.fontSize12};
   }
   button {
-    width: 90%;
-    margin: 10px auto;
+    margin: 10px 0;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 25px;
+    background-color: ${({ theme }) => theme.colors.red1};
+    color: ${({ theme }) => theme.colors.white};
+    :hover {
+      background-color: ${({ theme }) => theme.colors.red2};
+      color: ${({ theme }) => theme.colors.white};
+    }
+    border-radius: 4px;
   }
   div {
     width: 100%;
