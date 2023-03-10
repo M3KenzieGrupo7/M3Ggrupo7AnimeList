@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import ModalCreateList from "../../components/ModalCreateList/ModalCreateList";
 import { CustomListContext } from "../../providers/ListCustom";
 import { UserContext } from "../../providers/UserContext";
-import { StyledDivList, StyledLink } from "./style";
+import { StyledBTNCreateList, StyledDivList, StyledLink } from "./style";
 
 const DisplayCustomLists = () => {
   const { listsCustom, getSpecificListsCustom } = useContext(CustomListContext);
@@ -11,21 +11,19 @@ const DisplayCustomLists = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   useEffect(() => {
-    console.log("passou aqui");
-
     getSpecificListsCustom(
       user?.id || Number(localStorage.getItem("GeekAnimes:@idUser"))
     );
   }, []);
   return (
     <>
-      <button
+      <StyledBTNCreateList
         onClick={() => {
           setModalIsOpen(true);
         }}
       >
         Criar nova Lista
-      </button>
+      </StyledBTNCreateList>
       <ModalCreateList isOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} />
       <StyledDivList>
         {listsCustom.map(({ name, animesIds, id }) => {

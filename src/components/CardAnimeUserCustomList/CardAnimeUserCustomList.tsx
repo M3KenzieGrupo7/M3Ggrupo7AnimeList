@@ -1,6 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import { IAnimeList } from "../../providers/AnimesListContext/type";
+import { CustomListContext } from "../../providers/ListCustom";
+import { ICustomListEdit } from "../../providers/ListCustom/type";
 import { Card } from "./style";
+
+interface ICardProps extends IAnimeList {
+  listAnimes: IAnimeList[];
+  setAnimeList: React.Dispatch<React.SetStateAction<IAnimeList[] | undefined>>;
+  idList: number;
+}
 
 const CardAnimeUserCustomList = ({
   id,
@@ -10,7 +19,12 @@ const CardAnimeUserCustomList = ({
   name,
   synopsis,
   urlImage,
-}: IAnimeList) => {
+  listAnimes,
+  setAnimeList,
+  idList,
+}: ICardProps) => {
+  const { removeAnimeInCustomList } = useContext(CustomListContext);
+  const navigate = useNavigate();
   return (
     <Card>
       <div>
@@ -20,7 +34,26 @@ const CardAnimeUserCustomList = ({
       <h4>- {eps} eps</h4>
       <h4>- {author}</h4>
 
-      <button>Remover</button>
+      <button
+        onClick={() => {
+          const newList = listAnimes.filter((anime) => anime.id != id);
+          console.log(newList);
+          setAnimeList(newList);
+          let listIds: number[] = [];
+          newList.forEach((anime) => listIds.push(anime.id));
+
+          const CustomList: ICustomListEdit = {
+            id: idList,
+            amountAnimes: listIds.length,
+            animesIds: listIds,
+          };
+          removeAnimeInCustomList(idList, CustomList);
+
+          navigate(`/profile/customList/${idList}/${listIds}`);
+        }}
+      >
+        Remover
+      </button>
     </Card>
   );
 };

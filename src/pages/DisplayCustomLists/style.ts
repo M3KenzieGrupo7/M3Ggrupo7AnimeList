@@ -13,6 +13,18 @@ export const StyledDivList = styled.div`
   padding: 15px;
 `;
 
+export const StyledBTNCreateList = styled.button`
+  margin-top: 15px;
+  margin-left: 15px;
+  padding: 10px;
+  border: none;
+  border-radius: ${({ theme }) => theme.fonts.radius4};
+  background-color: ${({ theme }) => theme.colors.colorPrimary};
+  color: ${({ theme }) => theme.colors.white};
+  :hover {
+    background-color: ${({ theme }) => theme.colors.colorPrimaryFocus};
+  }
+`;
 export const StyledLink = styled(Link)`
   display: flex;
   text-align: center;
@@ -20,6 +32,11 @@ export const StyledLink = styled(Link)`
   justify-content: center;
   width: 120px;
   height: 60px;
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.colors.colorSecundary};
+  color: ${({ theme }) => theme.colors.colorPrimary};
+  :hover {
+    background-color: ${({ theme }) => theme.colors.colorPrimaryFocus};
+    color: ${({ theme }) => theme.colors.white};
+  }
   border-radius: 4px;
 `;
