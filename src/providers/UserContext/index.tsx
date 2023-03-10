@@ -89,7 +89,7 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
         "GeekAnimes:@idUser",
         JSON.stringify(response.data.user.id)
       );
-        navigate("/dashboard")
+        navigate("/")
     } catch (error) {
       const currentError = error as AxiosError
       console.log(currentError);
@@ -108,7 +108,6 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
         });
         setUser(response.data);
         localStorage.setItem("GeekAnimes:@user", JSON.stringify(response.data));
-        //   navigate("/dashboard")
       } catch (error) {
         console.log(error);
       }
@@ -133,7 +132,6 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
       }
     }
   };
-
 
   const userLogout = () => {
     setUser(null);
