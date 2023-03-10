@@ -46,11 +46,6 @@ export const AnimeFavoriteProvider = ({ children }: IDefaultProviderProps) => {
     }
   };
 
-  const data = {
-    animesIds: [80, 90, 100],
-    userId: 1,
-  };
-
   const animeFavoriteRegister = async (formData: IFavoriteAnimes) => {
     const token = localStorage.getItem("GeekAnimes:@token");
     if (token) {

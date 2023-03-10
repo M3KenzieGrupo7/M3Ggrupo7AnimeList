@@ -1,13 +1,15 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { IUser, IUser2 } from "../../providers/UserContext/types";
+import { IUser2 } from "../../providers/UserContext/types";
 import { DefaultTemplate } from "../Templates";
 
 export const PublicRoutes = () => {
-  const user: IUser2 | null = JSON.parse(localStorage.getItem('GeekAnimes:@user') || "null");
+  const user: IUser2 | null = JSON.parse(
+    localStorage.getItem("GeekAnimes:@user") || "null"
+  );
 
-  return(
+  return (
     <DefaultTemplate>
-      {user ? <Navigate to='/dashboard' /> : <Outlet />}
+      {user ? <Navigate to="/dashboard" /> : <Outlet />}
     </DefaultTemplate>
-  )
+  );
 };
