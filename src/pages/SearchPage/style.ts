@@ -1,36 +1,42 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export const StyledDivList = styled.div`
-  margin-top: 30px;
+export const StyledContainer = styled.div`
   width: 100%;
-  height: fit-content;
-  min-height: 300px;
-  gap: 25px;
-  display: flex;
-  justify-content: space-around;
+  max-width: 1024px;
+  margin: 100px auto;
   padding: 15px;
+  display: flex;
   flex-direction: column;
-`;
+  gap: 20px;
+  h1 {
+    color: ${({ theme }) => theme.colors.white};
+    font-size: ${({ theme }) => theme.fonts.fontSize18};
+  }
+  h2 {
+    color: ${({ theme }) => theme.colors.white};
+    font-size: ${({ theme }) => theme.fonts.fontSize16};
+  }
+  h3 {
+    color: ${({ theme }) => theme.colors.white};
+    font-size: ${({ theme }) => theme.fonts.fontSize14};
+  }
 
-export const StyledBTNCreateList = styled.button`
-  margin-top: 15px;
-  margin-left: 15px;
-  padding: 10px;
-  border: none;
-  border-radius: ${({ theme }) => theme.fonts.radius4};
-  background-color: ${({ theme }) => theme.colors.colorPrimary};
-  color: ${({ theme }) => theme.colors.white};
-  :hover {
-    background-color: ${({ theme }) => theme.colors.colorPrimaryFocus};
+  section {
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 20px;
   }
 `;
+
 export const StyledLink = styled(Link)`
   display: flex;
   text-align: center;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 200px;
   height: 50px;
   color: ${({ theme }) => theme.colors.white};
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
