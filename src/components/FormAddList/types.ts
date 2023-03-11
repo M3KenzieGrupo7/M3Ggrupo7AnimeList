@@ -1,9 +1,8 @@
 export interface IFormDataCustomList {
-    name: string;
-    id: number;
+  id?: string;
 }
 
 export interface IFormCustomList {
-    name: string;
-    userId?: number;
+  name: string;
+  userId?: number;
 }

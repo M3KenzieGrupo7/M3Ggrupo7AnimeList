@@ -4,23 +4,21 @@ import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { SubmitHandler } from "react-hook-form/dist/types";
 import { CustomListContext } from "../../providers/ListCustom";
-import { StyledFormAddList, } from "./style";
+import { StyledFormAddList } from "./style";
 import { IFormDataCustomList } from "./types";
+import { toast } from "react-toastify";
 
 const schema = yup
   .object({
-    name: yup.string().required("O nome deve ser informado"),
+    id: yup.string().required(),
   })
   .required();
 
-const FormAddList = () => {
-  const {
-    listsCustom,
-    animeListCustomRegister,
-    open,
-    setOpen,
-    getSpecificListsCustom,
-  } = useContext(CustomListContext);
+interface IFormAddProps {
+  animeid: number;
+}
+const FormAddList = ({ animeid }: IFormAddProps) => {
+  const { listsCustom, animeListCustomEdit } = useContext(CustomListContext);
 
   const {
     register,
@@ -31,41 +29,42 @@ const FormAddList = () => {
     resolver: yupResolver(schema),
   });
 
-  const submit2: SubmitHandler<IFormDataCustomList> = (data) => {
-    const {name} = data;
-    const idItem = listsCustom.filter(item => {
-      if(item.name === name){
-        data.id = Number(item.id);
-      }
-    })
-   
-    console.log(data);
+  const submit: SubmitHandler<IFormDataCustomList> = (data) => {
+    const exec = async () => {
+      const { id } = data;
 
-    
+      let list = listsCustom.filter((list) => list.id == Number(id))[0];
+      let listUpdateAnimesID =
+        list.animesIds?.filter((animeID) => animeID != animeid) || [];
+      listUpdateAnimesID.push(animeid);
+
+      list.animesIds = listUpdateAnimesID;
+
+      console.log(list);
+
+      await animeListCustomEdit(list, Number(id));
+      toast.success("Anime Adiconado a Lista " + list.name + " com sucesso!");
+    };
+    exec();
     reset();
   };
 
-  const idItem = (id: number) => {
-    console.log(id)
-  }
-
-
   return (
-    <StyledFormAddList className="form-select" onSubmit={handleSubmit(submit2)}>
+    <StyledFormAddList className="form-select" onSubmit={handleSubmit(submit)}>
       <section className="add-form">
         <label htmlFor="status">Adicionar na lista</label>
-        <select {...register("name")} >
-          <option value=""></option>
-          {listsCustom.map((itensList) => {
+        <select {...register("id")}>
+          <option value="">Selecionar Lista</option>
+          {listsCustom.map((list) => {
             return (
-              <option key={itensList.id} value={itensList.name}>
-                {itensList.name}
+              <option key={list.id} value={list.id}>
+                {list.name}
               </option>
             );
           })}
         </select>
         <button type="submit" className="btn-add">
-          Adicionar
+          Adicionar na lista
         </button>
       </section>
     </StyledFormAddList>
