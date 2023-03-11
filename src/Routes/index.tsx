@@ -8,6 +8,7 @@ import DisplayCustomLists from "../pages/DisplayCustomLists/DisplayCustomLists";
 import DisplayAnimesCustomList from "../pages/DisplayAnimesCustomList/DisplayAnimesCustomList";
 import { PublicRoutes } from "../components/PublicRoutes";
 import { ProtectedRoutes } from "../components/ProtectedRoutes";
+import SearchPage from "../pages/SearchPage/SearchPage";
 
 const RouterPages = () => (
   <Routes>
@@ -19,6 +20,7 @@ const RouterPages = () => (
 
     <Route path="/" element={<ProtectedRoutes />}>
       <Route path="/dashboard" element={<DashBoard />} />
+      <Route path="/search/:searchValue" element={<SearchPage />} />
       <Route path="/profile" element={<UserProfile />}>
         <Route index element={<DisplayCustomLists />} />
         <Route

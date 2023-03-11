@@ -2,6 +2,7 @@ import { StyledMainRegister } from "./style";
 import FormRegister from "../../components/FormRegister";
 import { Link } from "react-router-dom";
 
+
 const RegisterPage = () => {
   return (
     <StyledMainRegister>
@@ -11,6 +12,7 @@ const RegisterPage = () => {
         </div>
         <h1>Cadastro</h1>
         <FormRegister />
+       
       </div>
     </StyledMainRegister>
   );

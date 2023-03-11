@@ -1,7 +1,9 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { api } from "../../services/api";
 import { IAnimeList } from "../AnimesListContext/type";
+import { LoadingContext } from "../LoadingContext";
 import { IDefaultProviderProps } from "../UserContext/types";
 import {
   ICustomList,
@@ -14,11 +16,15 @@ interface ICustomListContext {
   listsCustom: ICustomList[];
   getSpecificListsCustom: (userID: number) => void;
   animeListCustomRegister: (formData: ICustomListRegister) => Promise<boolean>;
+  removeAnimeInCustomList: (
+    id: number,
+    newlist: ICustomListEdit
+  ) => Promise<void>;
   animeListCustomEdit: (
     formData: ICustomListEdit,
     idAnime: number
   ) => Promise<void>;
-  animeFavoriteDelete: (idAnime: number) => Promise<void>;
+  customListDelete: (idList: number) => Promise<void>;
   getSpecificsAnimes: (listID: number[]) => Promise<IAnimeList[]>;
   open: string;
   setOpen: React.Dispatch<React.SetStateAction<string>>;
@@ -30,8 +36,10 @@ export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
   const [listsCustom, setListsCustom] = useState<ICustomList[]>([]);
   const [open, setOpen] = useState("none");
 
+  const { setLoading } = useContext(LoadingContext);
   const getSpecificListsCustom = async (userID: number) => {
     const token = localStorage.getItem("GeekAnimes:@token");
+    setLoading(true);
 
     if (token) {
       try {
@@ -43,18 +51,18 @@ export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
             },
           }
         );
-        console.log("deu certo", response.data);
         setListsCustom(response.data);
+        setLoading(false);
       } catch (error) {
-        console.log("erro aqui");
-
-        console.log(error);
+        console.error(error);
+        setLoading(false);
       }
     }
   };
 
   const getSpecificsAnimes = async (listID: number[]) => {
     const token = localStorage.getItem("GeekAnimes:@token");
+    setLoading(true);
 
     let filter = "";
 
@@ -69,11 +77,14 @@ export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
             Authorization: `Bearer ${token}`,
           },
         });
+        setLoading(false);
         return response.data;
       } catch (error) {
-        console.log(error);
+        console.error(error);
+        setLoading(false);
       }
     }
+    setLoading(false);
     return [];
   };
 
@@ -109,12 +120,11 @@ export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
             Authorization: `Bearer ${token}`,
           },
         });
-        //   navigate("/dashboard");
         setListsCustom([...listsCustom, response.data]);
         toast.success("Lista Cadastrada com Sucesso!");
         return true;
       } catch (error) {
-        console.log(error);
+        console.error(error);
         return false;
       }
     }
@@ -137,25 +147,46 @@ export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
             },
           }
         );
-        //   navigate("/dashboard");
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
   };
 
-  const animeFavoriteDelete = async (idAnime: number) => {
+  const customListDelete = async (idList: number) => {
     const token = localStorage.getItem("GeekAnimes:@token");
     if (token) {
       try {
-        await api.delete(`/customlist/${idAnime}`, {
+        await api.delete(`/customlist/${idList}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        //   navigate("/dashboard");
+        toast.success("Lista Deletada com Sucesso!");
       } catch (error) {
-        console.log(error);
+        console.error(error);
+      }
+    }
+  };
+
+  const removeAnimeInCustomList = async (
+    id: number,
+    newlist: ICustomListEdit
+  ) => {
+    const token = localStorage.getItem("GeekAnimes:@token");
+    if (token) {
+      try {
+        const response = await api.patch<ICustomList>(
+          `/customlist/${id}`,
+          newlist,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+      } catch (error) {
+        console.error(error);
       }
     }
   };
@@ -167,10 +198,11 @@ export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
         getSpecificListsCustom,
         animeListCustomRegister,
         animeListCustomEdit,
-        animeFavoriteDelete,
+        customListDelete,
         getSpecificsAnimes,
         open,
-        setOpen
+        setOpen,
+        removeAnimeInCustomList,
       }}
     >
       {children}

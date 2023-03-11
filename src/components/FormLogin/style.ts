@@ -10,13 +10,13 @@ export const StyledForm = styled.form`
   justify-content: space-between;
   button {
     padding: 10px;
-    background-color: #0eb770;
+    background-color:${({theme})=> theme.colors.colorSecundary};
     border: none;
     border-radius: 8px;
     color: white;
   }
   p{
-    color: #820B44;
+    color: ${({theme})=> theme.colors.red1};
     font-size: var(0.875rem);
     font-weight: bold;
   }

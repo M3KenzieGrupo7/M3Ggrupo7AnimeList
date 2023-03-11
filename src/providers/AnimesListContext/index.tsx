@@ -30,7 +30,7 @@ export const AnimesListProvider = ({ children }: IDefaultProviderProps) => {
         const response = await api.get<IAnimeList[]>(`/animes`);
         setAnimes(response.data);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
     listAnimes();
@@ -45,7 +45,7 @@ export const AnimesListProvider = ({ children }: IDefaultProviderProps) => {
       });
       setAnimeFound(response.data);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -60,7 +60,7 @@ export const AnimesListProvider = ({ children }: IDefaultProviderProps) => {
         });
         //   navigate("/dashboard");
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
   };

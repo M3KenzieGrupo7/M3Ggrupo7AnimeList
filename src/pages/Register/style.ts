@@ -11,7 +11,7 @@ export const StyledMainRegister = styled.main`
   justify-content: center;
   color: white;
   .info-box-form {
-    background-color: #222121;
+    background-color:${({theme})=> theme.colors.grey};
     display: flex;
     flex-direction: column;
     justify-content: center;

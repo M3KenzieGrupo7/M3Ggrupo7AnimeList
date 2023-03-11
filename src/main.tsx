@@ -8,21 +8,27 @@ import { BrowserRouter } from "react-router-dom";
 import { CustomListProvider } from "./providers/ListCustom";
 import { AnimesListProvider } from "./providers/AnimesListContext";
 import { AnimeFavoriteProvider } from "./providers/AnimesFavoritesContext";
+import { LoadingProvider } from "./providers/LoadingContext";
+import { SearchProvider } from "./providers/SearchContext";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <BrowserRouter>
-      <UserProvider>
-        <AnimesListProvider>
-          <CustomListProvider>
-            <AnimeFavoriteProvider>
-              <ThemeProvider theme={mainTheme}>
-                <App />
-              </ThemeProvider>
-            </AnimeFavoriteProvider>
-          </CustomListProvider>
-        </AnimesListProvider>
-      </UserProvider>
+      <LoadingProvider>
+        <UserProvider>
+          <AnimesListProvider>
+            <CustomListProvider>
+              <AnimeFavoriteProvider>
+                <SearchProvider>
+                  <ThemeProvider theme={mainTheme}>
+                    <App />
+                  </ThemeProvider>
+                </SearchProvider>
+              </AnimeFavoriteProvider>
+            </CustomListProvider>
+          </AnimesListProvider>
+        </UserProvider>
+      </LoadingProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
