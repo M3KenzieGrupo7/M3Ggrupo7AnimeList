@@ -65,7 +65,7 @@ export const SearchProvider = ({ children }: IDefaultProviderProps) => {
     try {
       const response = await api.get<IUser[]>(`/users?`, {
         params: {
-          name_like: nameAnime,
+          nickname_like: nameAnime,
         },
       });
       setProfileUsers(response.data);
