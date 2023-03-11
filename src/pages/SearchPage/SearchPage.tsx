@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import CardAnimeSearch from "../../components/CardAnimeSearch/CardAnimeSearch";
 import CardAnimeUserCustomList from "../../components/CardAnimeUserCustomList/CardAnimeUserCustomList";
+import CardUserSearch from "../../components/CardUserSearch/CardUserSearch";
 import Header from "../../components/Header/Header";
 import { SearchContext } from "../../providers/SearchContext";
 import { StyledContainer, StyledLink } from "./style";
@@ -39,7 +40,17 @@ const SearchPage = () => {
         <h2>Usuarios</h2>
         <section>
           {profileUsers?.map((user) => {
-            return <h1>{user.name}</h1>;
+            return (
+              <CardUserSearch
+                key={"UserSearch" + user.id}
+                avatar={user.avatar}
+                background={user.background}
+                nickname={user.nickname}
+                email={""}
+                name={""}
+                id={user.id}
+              />
+            );
           })}
           {profileUsers ? null : (
             <h3>Não foi possivel Localizar nenhum Usuario</h3>

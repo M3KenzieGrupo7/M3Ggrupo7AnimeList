@@ -9,6 +9,9 @@ import DisplayAnimesCustomList from "../pages/DisplayAnimesCustomList/DisplayAni
 import { PublicRoutes } from "../components/PublicRoutes";
 import { ProtectedRoutes } from "../components/ProtectedRoutes";
 import SearchPage from "../pages/SearchPage/SearchPage";
+import UserPage from "../pages/UserPage/UserPage";
+import DisplayUserCustomLists from "../pages/DisplayUserCustomLists/DisplayUserCustomLists";
+import DisplayCustomListUserPage from "../pages/DisplayAnimeListUserPage/DisplayCustomListUserPage";
 
 const RouterPages = () => (
   <Routes>
@@ -29,10 +32,12 @@ const RouterPages = () => (
         />
         <Route path="customList/:id/" element={<DisplayAnimesCustomList />} />
       </Route>
-      <Route path="/user/:id" element={<UserProfile />}>
-        <Route index element={<DisplayCustomLists />} />
-        <Route path=":idslist" element={<DisplayAnimesCustomList />} />
-        <Route path="customList/:id/" element={<DisplayAnimesCustomList />} />
+      <Route path="/user/:id/" element={<UserPage />}>
+        <Route index element={<DisplayUserCustomLists />} />
+        <Route
+          path="customList/:idList"
+          element={<DisplayCustomListUserPage />}
+        />
       </Route>
     </Route>
   </Routes>
