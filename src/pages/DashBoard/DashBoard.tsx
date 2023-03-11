@@ -1,7 +1,6 @@
 import AnimeList from "../../components/AnimeList/AnimeList";
 import AnimeListFavorites from "../../components/AnimeListFavorites/AnimeListFavorites";
 import Header from "../../components/Header/Header";
-import ModalEditAnimes from "../../components/ModalListAnimes";
 import { StyledDashBoard } from "./style";
 
 const DashBoard = () => {
@@ -10,7 +9,6 @@ const DashBoard = () => {
       <Header></Header>
       <AnimeList></AnimeList>
       <AnimeListFavorites></AnimeListFavorites>
-      <ModalEditAnimes />
     </StyledDashBoard>
   );
 };

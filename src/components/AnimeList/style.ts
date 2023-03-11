@@ -7,4 +7,5 @@ export const StyledAnimeList = styled.ul`
   flex-wrap: wrap;
   padding: 20px;
   background-color: #b6bbd8;
+  position: relative;
 `;
