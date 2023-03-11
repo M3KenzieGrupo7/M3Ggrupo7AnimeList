@@ -6,14 +6,17 @@ import { SubmitHandler } from "react-hook-form/dist/types";
 import { CustomListContext } from "../../providers/ListCustom";
 import { StyledModalEdit } from "./style";
 import { IFormDataCustomList } from "./types";
+import FormAddList from "../FormAddList";
+import FormNewList from "../FormNewList";
 
 const schema = yup.object({
   name: yup.string().required("O nome deve ser informado")
 }).required();
 
 const ModalEditAnimes = () => {
-  const { listsCustom, animeListCustomRegister, open, setOpen } =
+  const { listsCustom, animeListCustomRegister, open, setOpen, getSpecificListsCustom } =
     useContext(CustomListContext);
+    
 
   const {
     register,
@@ -25,10 +28,12 @@ const ModalEditAnimes = () => {
 });
 
   const submit: SubmitHandler<IFormDataCustomList> = (data) => {
-    event?.preventDefault();
+    // event?.preventDefault();
     animeListCustomRegister(data)
     reset();
   };
+
+
 
   const submit2: SubmitHandler<IFormDataCustomList> = (data) => {
     event?.preventDefault();
@@ -36,47 +41,16 @@ const ModalEditAnimes = () => {
     reset();
   };
 
-  const registerItem = (value: string) => {
-    event?.preventDefault();
-    console.log(value);
-    reset();
-  };
-
+  const data = () => {
+    console.log("click")
+  }
   return (
     <StyledModalEdit open={open}>
       <div className="container-modal">
         <p onClick={() => {setOpen("none")}}>X</p>
         <div className="container-forms">
-          <form className="form-select" onSubmit={handleSubmit(submit2)}>
-            <section className="add-form">
-              <label htmlFor="status">Adicionar na lista</label>
-              <select>
-                {listsCustom.map((itensList) => {
-                  return (
-                    <option key={itensList.id} value={itensList.name}>
-                      {itensList.name}
-                    </option>
-                  );
-                })}
-              </select>
-              <button type="submit" className="btn-add">
-                Adicionar
-              </button>
-            </section>
-          </form>
-          <form className="create-list" onSubmit={handleSubmit(submit)}>
-            <div className="add-list">
-              <label htmlFor="new-list">Criar uma nova lista</label>
-              <input
-                type="text"
-                id="new-list"
-                {...register("name")}
-                placeholder="Nome da lista"
-              />
-              {errors.name?.message}
-              <button type="submit">Criar Lista</button>
-            </div>
-          </form>
+         <FormAddList />
+          <FormNewList />
         </div>
       </div>
     </StyledModalEdit>

@@ -9,8 +9,20 @@ interface IAnimeProps {
   addAnimeToListFavorite: (animeToAdd: IAnimeList) => void;
 }
 
+interface IUserID {
+  name: string;
+  userId?: number;
+}
+
 const AnimeCard = ({ anime, addAnimeToListFavorite }: IAnimeProps) => {
-  const { setOpen } = useContext(CustomListContext);
+  const { setOpen, getSpecificListsCustom } = useContext(CustomListContext);
+  const userID = Number(localStorage.getItem("GeekAnimes:@idUser"));
+
+  const openModalEdit = (id: number) => {
+    setOpen("block");
+    getSpecificListsCustom(id)
+  }
+
   return (
       <StyledAnimeCard>
         <figure>
@@ -19,7 +31,7 @@ const AnimeCard = ({ anime, addAnimeToListFavorite }: IAnimeProps) => {
         <div className="content">
           <p>{anime.synopsis}</p>
         </div>
-        <button id={String(anime.id)} onClick={() => setOpen("block")}>
+        <button id={String(anime.id)} onClick={() => openModalEdit(userID)}>
           Adicionar
         </button>
         <FaHeart onClick={() => addAnimeToListFavorite(anime)}></FaHeart>
