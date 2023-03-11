@@ -6,10 +6,10 @@ export interface ICustomList {
   id: number;
 }
 export interface ICustomListRegister {
-  userId: number;
+  userId?: number;
   name: string;
-  animesIds: number[];
-  amountAnimes: number;
+  animesIds?: number[];
+  amountAnimes?: number;
 }
 
 export interface IIdAnimeCustomList {
