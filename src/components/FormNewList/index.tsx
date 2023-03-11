@@ -4,20 +4,16 @@ import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { SubmitHandler } from "react-hook-form/dist/types";
 import { CustomListContext } from "../../providers/ListCustom";
-import { StyledModalEdit } from "./style";
+import { StyledFormNewList } from "./style";
 import { IFormDataCustomList } from "./types";
-import FormAddList from "../FormAddList";
-import FormNewList from "../FormNewList";
 
 const schema = yup
   .object({
     name: yup.string().required("O nome deve ser informado"),
   })
   .required();
-interface IFormAddProps {
-  animeid: number;
-}
-const ModalEditAnimes = ({ animeid }: IFormAddProps) => {
+
+const FormNewList = () => {
   const {
     listsCustom,
     animeListCustomRegister,
@@ -36,37 +32,24 @@ const ModalEditAnimes = ({ animeid }: IFormAddProps) => {
   });
 
   const submit: SubmitHandler<IFormDataCustomList> = (data) => {
-    // event?.preventDefault();
     animeListCustomRegister(data);
     reset();
   };
 
-  const submit2: SubmitHandler<IFormDataCustomList> = (data) => {
-    event?.preventDefault();
-    console.log(data);
-    reset();
-  };
-
-  const data = () => {
-    console.log("click");
-  };
   return (
-    <StyledModalEdit open={open}>
-      <div className="container-modal">
-        <p
-          onClick={() => {
-            setOpen("none");
-          }}
-        >
-          X
-        </p>
-        <div className="container-forms">
-          <FormAddList animeid={animeid} />
-          <FormNewList />
-        </div>
+    <StyledFormNewList className="create-list" onSubmit={handleSubmit(submit)}>
+      <div className="add-list">
+        <label htmlFor="new-list">Criar uma nova lista</label>
+        <input
+          type="text"
+          id="new-list"
+          {...register("name")}
+          placeholder="Nome da lista"
+        />
+        <button type="submit">Criar Lista</button>
       </div>
-    </StyledModalEdit>
+    </StyledFormNewList>
   );
 };
 
-export default ModalEditAnimes;
+export default FormNewList;

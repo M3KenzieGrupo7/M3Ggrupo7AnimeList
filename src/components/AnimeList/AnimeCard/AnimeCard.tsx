@@ -8,10 +8,27 @@ import { useContext } from "react";
 interface IAnimeProps {
   anime: IAnimeList;
   addAnimeToListFavorite: (animeToAdd: IAnimeList) => void;
+  setAnimeSelectedID: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const AnimeCard = ({ anime, addAnimeToListFavorite }: IAnimeProps) => {
-  const { setOpen } = useContext(CustomListContext);
+interface IUserID {
+  name: string;
+  userId?: number;
+}
+
+const AnimeCard = ({
+  anime,
+  addAnimeToListFavorite,
+  setAnimeSelectedID,
+}: IAnimeProps) => {
+  const { setOpen, getSpecificListsCustom } = useContext(CustomListContext);
+  const userID = Number(localStorage.getItem("GeekAnimes:@idUser"));
+
+  const openModalEdit = (id: number) => {
+    setOpen("block");
+    getSpecificListsCustom(id);
+  };
+
   return (
     <StyledAnimeCard>
       <figure>
@@ -24,7 +41,10 @@ const AnimeCard = ({ anime, addAnimeToListFavorite }: IAnimeProps) => {
         <MdPlaylistAdd
           className="btnAddList"
           id={String(anime.id)}
-          onClick={() => setOpen("block")}
+          onClick={() => {
+            setOpen("block");
+            setAnimeSelectedID(anime.id);
+          }}
         ></MdPlaylistAdd>
         <FaHeart
           className="btnFavorite"

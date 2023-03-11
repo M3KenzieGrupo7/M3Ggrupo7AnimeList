@@ -35,8 +35,8 @@ export const CustomListContext = createContext({} as ICustomListContext);
 export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
   const [listsCustom, setListsCustom] = useState<ICustomList[]>([]);
   const [open, setOpen] = useState("none");
-
   const { setLoading } = useContext(LoadingContext);
+
   const getSpecificListsCustom = async (userID: number) => {
     const token = localStorage.getItem("GeekAnimes:@token");
     setLoading(true);
@@ -104,15 +104,16 @@ export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
         }
       }
     };
-    animesCustomList()
+    animesCustomList();
   }, []);
-  
 
   const animeListCustomRegister = async (formData: ICustomListRegister) => {
     const token = localStorage.getItem("GeekAnimes:@token");
-    const idUser: number = JSON.parse(localStorage.getItem('GeekAnimes:@idUser') || "null");
-    formData['userId'] = idUser;
-    console.log(formData)
+    const idUser: number = JSON.parse(
+      localStorage.getItem("GeekAnimes:@idUser") || "null"
+    );
+    formData["userId"] = idUser;
+    console.log(formData);
     if (token) {
       try {
         const response = await api.post<ICustomList>(`/customlist`, formData, {
