@@ -9,20 +9,22 @@ interface IAnimeProps {
   addAnimeToListFavorite: (animeToAdd: IAnimeList) => void;
 }
 
-const AnimeCard = ({ anime, addAnimeToListFavorite }: IAnimeProps) =>{ 
+const AnimeCard = ({ anime, addAnimeToListFavorite }: IAnimeProps) => {
   const { setOpen } = useContext(CustomListContext);
-  return(
-    <StyledAnimeCard>
-      <figure>
-        <img src={anime.urlImage} alt={anime.name} />
-      </figure>
-      <div className="content">
-        <p>{anime.synopsis}</p>
-      </div>
-      <button id={String(anime.id)} onClick={() => setOpen("block")}>Adicionar</button>
-      <FaHeart onClick={() => addAnimeToListFavorite(anime)}></FaHeart>
-    </StyledAnimeCard>
-  )
+  return (
+      <StyledAnimeCard>
+        <figure>
+          <img src={anime.urlImage} alt={anime.name} />
+        </figure>
+        <div className="content">
+          <p>{anime.synopsis}</p>
+        </div>
+        <button id={String(anime.id)} onClick={() => setOpen("block")}>
+          Adicionar
+        </button>
+        <FaHeart onClick={() => addAnimeToListFavorite(anime)}></FaHeart>
+      </StyledAnimeCard>
+  );
 };
 
 export default AnimeCard;
