@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { IoMdRemoveCircle } from "react-icons/io";
+import { FcFullTrash } from "react-icons/fc";
 import { StyledFavoriteCard } from "./style";
 import { IAnimeListFavorite } from "../../../providers/AnimesListContext/type";
 import { AnimesListContext } from "../../../providers/AnimesListContext";
@@ -9,11 +9,7 @@ interface IAnimeFavoriteProps {
 }
 
 const CardFavorite = ({ anime }: IAnimeFavoriteProps) => {
-  const {
-    listAnimesFavorite,
-    setListAnimesFavorite,
-    removeAnimeToListFavorite,
-  } = useContext(AnimesListContext);
+  const { removeAnimeToListFavorite } = useContext(AnimesListContext);
   return (
     <StyledFavoriteCard key={anime.id}>
       <figure>
@@ -22,9 +18,10 @@ const CardFavorite = ({ anime }: IAnimeFavoriteProps) => {
       <div className="content">
         <p>{anime.name}</p>
       </div>
-      <IoMdRemoveCircle
+      <FcFullTrash
+        className="btnRemove"
         onClick={() => removeAnimeToListFavorite(anime.id)}
-      ></IoMdRemoveCircle>
+      ></FcFullTrash>
     </StyledFavoriteCard>
   );
 };

@@ -1,4 +1,5 @@
 import { FaHeart } from "react-icons/fa";
+import { MdPlaylistAdd } from "react-icons/md";
 import { StyledAnimeCard } from "./style";
 import { IAnimeList } from "../../../providers/AnimesListContext/type";
 import { CustomListContext } from "../../../providers/ListCustom";
@@ -12,18 +13,25 @@ interface IAnimeProps {
 const AnimeCard = ({ anime, addAnimeToListFavorite }: IAnimeProps) => {
   const { setOpen } = useContext(CustomListContext);
   return (
-      <StyledAnimeCard>
-        <figure>
-          <img src={anime.urlImage} alt={anime.name} />
-        </figure>
-        <div className="content">
-          <p>{anime.synopsis}</p>
-        </div>
-        <button id={String(anime.id)} onClick={() => setOpen("block")}>
-          Adicionar
-        </button>
-        <FaHeart onClick={() => addAnimeToListFavorite(anime)}></FaHeart>
-      </StyledAnimeCard>
+    <StyledAnimeCard>
+      <figure>
+        <img src={anime.urlImage} alt={anime.name} />
+      </figure>
+      <div className="content">
+        <p>{anime.synopsis}</p>
+      </div>
+      <div className="containerBtns">
+        <MdPlaylistAdd
+          className="btnAddList"
+          id={String(anime.id)}
+          onClick={() => setOpen("block")}
+        ></MdPlaylistAdd>
+        <FaHeart
+          className="btnFavorite"
+          onClick={() => addAnimeToListFavorite(anime)}
+        ></FaHeart>
+      </div>
+    </StyledAnimeCard>
   );
 };
 
