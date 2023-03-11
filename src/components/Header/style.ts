@@ -8,6 +8,7 @@ export const StyledBackHeader = styled.div`
   background-color: ${({ theme }) => theme.colors.grey2};
   position: fixed;
   top: 0;
+  z-index: 500;
 `;
 export const StyledHeader = styled.header`
   width: 100%;

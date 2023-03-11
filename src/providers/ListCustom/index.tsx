@@ -1,8 +1,9 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { api } from "../../services/api";
 import { IAnimeList } from "../AnimesListContext/type";
+import { LoadingContext } from "../LoadingContext";
 import { IDefaultProviderProps } from "../UserContext/types";
 import {
   ICustomList,
@@ -33,8 +34,10 @@ export const CustomListContext = createContext({} as ICustomListContext);
 export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
   const [listsCustom, setListsCustom] = useState<ICustomList[]>([]);
 
+  const { setLoading } = useContext(LoadingContext);
   const getSpecificListsCustom = async (userID: number) => {
     const token = localStorage.getItem("GeekAnimes:@token");
+    setLoading(true);
 
     if (token) {
       try {
@@ -47,14 +50,17 @@ export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
           }
         );
         setListsCustom(response.data);
+        setLoading(false);
       } catch (error) {
         console.error(error);
+        setLoading(false);
       }
     }
   };
 
   const getSpecificsAnimes = async (listID: number[]) => {
     const token = localStorage.getItem("GeekAnimes:@token");
+    setLoading(true);
 
     let filter = "";
 
@@ -69,11 +75,14 @@ export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
             Authorization: `Bearer ${token}`,
           },
         });
+        setLoading(false);
         return response.data;
       } catch (error) {
         console.error(error);
+        setLoading(false);
       }
     }
+    setLoading(false);
     return [];
   };
 

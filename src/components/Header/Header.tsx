@@ -11,8 +11,13 @@ import { UserContext } from "../../providers/UserContext";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import schema from "./validation";
+import { useNavigate } from "react-router-dom";
+import { SearchContext } from "../../providers/SearchContext";
 
 const Header = () => {
+  const { animes, getFiltredAnimes, getFiltredUsers, profileUsers } =
+    useContext(SearchContext);
+
   const [isOpen, setIsOpen] = useState(false);
   const changeIsOpen = () => {
     setIsOpen(!isOpen);
@@ -22,6 +27,7 @@ const Header = () => {
     name: string;
   }
 
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -30,8 +36,11 @@ const Header = () => {
   } = useForm<Iregister>({ resolver: yupResolver(schema) });
 
   const submit: SubmitHandler<Iregister> = (formData) => {
-    const userID = localStorage.getItem("GeekAnimes:@idUser");
-    const exec = async () => {};
+    const exec = async () => {
+      getFiltredAnimes(formData.name);
+      getFiltredUsers(formData.name);
+      navigate(`/search/${formData.name}`);
+    };
     exec();
     reset();
   };
@@ -42,26 +51,30 @@ const Header = () => {
     <StyledBackHeader>
       <StyledHeader>
         <img src={logo} alt="" />
-        <InputHeader
-          register={register("name")}
-          id="searchBarHeader"
-          placeholder="Pesquisar por Anime ou perfil"
-          type="text"
-        />
+        <form onSubmit={handleSubmit(submit)}>
+          <InputHeader
+            register={register("name")}
+            id="searchBarHeader"
+            placeholder="Pesquisar por Anime ou perfil"
+            type="text"
+          />
+          <button type="submit">Pesquisar</button>
+        </form>
+
         <MenuButton
           changeValueButton={changeIsOpen}
           isOpen={isOpen}
           className="DropButton"
         />
         <HeaderDropBox isOpen={isOpen}>
-          <HeaderProfileLink
-            nickname={user?.nickname || ""}
-            avatar={user?.background || ""}
-          />
           <div>
             <HomeButton />
             <CategoryButton />
           </div>
+          <HeaderProfileLink
+            nickname={user?.nickname || ""}
+            avatar={user?.background || ""}
+          />
           <LogoutButton />
         </HeaderDropBox>
       </StyledHeader>
