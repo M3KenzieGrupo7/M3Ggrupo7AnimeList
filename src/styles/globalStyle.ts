@@ -18,8 +18,4 @@ export const GlobalStyles = createGlobalStyle`
     cursor: pointer;
   }
 
-  dialog{
-    display: unset;
-    position: unset;
-  }
 `;

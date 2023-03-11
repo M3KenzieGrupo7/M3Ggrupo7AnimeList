@@ -1,8 +1,9 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { api } from "../../services/api";
 import { IAnimeList } from "../AnimesListContext/type";
+import { LoadingContext } from "../LoadingContext";
 import { IDefaultProviderProps } from "../UserContext/types";
 import {
   ICustomList,
@@ -14,7 +15,6 @@ import {
 interface ICustomListContext {
   listsCustom: ICustomList[];
   getSpecificListsCustom: (userID: number) => void;
-  animesCustomList: () => Promise<void>;
   animeListCustomRegister: (formData: ICustomListRegister) => Promise<boolean>;
   removeAnimeInCustomList: (
     id: number,
@@ -26,15 +26,20 @@ interface ICustomListContext {
   ) => Promise<void>;
   customListDelete: (idList: number) => Promise<void>;
   getSpecificsAnimes: (listID: number[]) => Promise<IAnimeList[]>;
+  open: string;
+  setOpen: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const CustomListContext = createContext({} as ICustomListContext);
 
 export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
   const [listsCustom, setListsCustom] = useState<ICustomList[]>([]);
+  const [open, setOpen] = useState("none");
+  const { setLoading } = useContext(LoadingContext);
 
   const getSpecificListsCustom = async (userID: number) => {
     const token = localStorage.getItem("GeekAnimes:@token");
+    setLoading(true);
 
     if (token) {
       try {
@@ -47,14 +52,17 @@ export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
           }
         );
         setListsCustom(response.data);
+        setLoading(false);
       } catch (error) {
         console.error(error);
+        setLoading(false);
       }
     }
   };
 
   const getSpecificsAnimes = async (listID: number[]) => {
     const token = localStorage.getItem("GeekAnimes:@token");
+    setLoading(true);
 
     let filter = "";
 
@@ -69,34 +77,43 @@ export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
             Authorization: `Bearer ${token}`,
           },
         });
+        setLoading(false);
         return response.data;
       } catch (error) {
         console.error(error);
+        setLoading(false);
       }
     }
+    setLoading(false);
     return [];
   };
 
-  const animesCustomList = async () => {
-    const token = localStorage.getItem("GeekAnimes:@token");
-    if (token) {
-      try {
-        const response = await api.get<ICustomList[]>(`/customlist`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        setListsCustom(response.data);
-      } catch (error) {
-        console.error(error);
+  useEffect(() => {
+    const animesCustomList = async () => {
+      const token = localStorage.getItem("GeekAnimes:@token");
+      if (token) {
+        try {
+          const response = await api.get<ICustomList[]>(`/customlist`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          setListsCustom(response.data);
+        } catch (error) {
+          console.log(error);
+        }
       }
-    }
+    };
     animesCustomList();
-  };
+  }, []);
 
   const animeListCustomRegister = async (formData: ICustomListRegister) => {
     const token = localStorage.getItem("GeekAnimes:@token");
+    const idUser: number = JSON.parse(
+      localStorage.getItem("GeekAnimes:@idUser") || "null"
+    );
+    formData["userId"] = idUser;
+    console.log(formData);
     if (token) {
       try {
         const response = await api.post<ICustomList>(`/customlist`, formData, {
@@ -180,11 +197,12 @@ export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
       value={{
         listsCustom,
         getSpecificListsCustom,
-        animesCustomList,
         animeListCustomRegister,
         animeListCustomEdit,
         customListDelete,
         getSpecificsAnimes,
+        open,
+        setOpen,
         removeAnimeInCustomList,
       }}
     >

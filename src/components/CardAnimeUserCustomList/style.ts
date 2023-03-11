@@ -1,10 +1,13 @@
 import styled from "styled-components";
 
 export const Card = styled.div`
-  width: 130px;
-  height: fit-content;
+  width: 150px;
+  height: 300px;
   border: 1px solid #000;
   border-radius: 4px;
+  position: relative;
+  padding: 15px;
+  background-color: ${({ theme }) => theme.colors.grey2};
   h1 {
     color: ${({ theme }) => theme.colors.white};
     font-size: ${({ theme }) => theme.fonts.fontSize16};
@@ -14,6 +17,8 @@ export const Card = styled.div`
     font-size: ${({ theme }) => theme.fonts.fontSize12};
   }
   button {
+    position: absolute;
+    bottom: 15px;
     margin: 10px 0;
     display: flex;
     text-align: center;

@@ -21,12 +21,15 @@ interface IUserContext {
   editUser: (formData: IEditFormValues, idUser: number) => Promise<void>;
   deleteUser: (idUser: number) => Promise<void>;
   userLogout: () => void;
+  getUserSearch: (id: number) => Promise<void>;
+  userSearch: IUser | null;
 }
 
 export const UserContext = createContext({} as IUserContext);
 
 export const UserProvider = ({ children }: IDefaultProviderProps) => {
   const [user, setUser] = useState<IUser | null>(null);
+  const [userSearch, setUserSearch] = useState<IUser | null>(null);
   const navigate = useNavigate();
 
   const loginUser = async (formData: ILoginFormData) => {
@@ -89,7 +92,7 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
         "GeekAnimes:@idUser",
         JSON.stringify(response.data.user.id)
       );
-      setTimeout(()=>navigate('/login'),1300);
+      setTimeout(() => navigate("/login"), 1300);
       toast.success("Registro efetuado");
     } catch (error) {
       const currentError = error as AxiosError;
@@ -126,7 +129,7 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
         localStorage.removeItem("GeekAnimes:@token");
         localStorage.removeItem("GeekAnimes:@user");
         localStorage.removeItem("GeekAnimes:@idUser");
-          navigate("/")
+        navigate("/");
       } catch (error) {
         console.error(error);
       }
@@ -141,6 +144,23 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
     navigate("/");
   };
 
+  const getUserSearch = async (id: number) => {
+    const token = localStorage.getItem("GeekAnimes:@token");
+    if (token) {
+      try {
+        const response = await api.get<IUser>(`/users/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        localStorage.setItem("GeekAnimes:@user", JSON.stringify(response.data));
+        setUserSearch(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -150,6 +170,8 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
         editUser,
         deleteUser,
         userLogout,
+        getUserSearch,
+        userSearch,
       }}
     >
       {children}
