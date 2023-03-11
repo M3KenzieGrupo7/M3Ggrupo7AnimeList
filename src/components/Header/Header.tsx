@@ -1,6 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { HeaderDropBox, StyledBackHeader, StyledHeader } from "./style";
-import logo from "../../assets/logo70x45.svg";
+import {
+  HeaderDropBox,
+  StyledBackHeader,
+  StyledHeader,
+  StyledSearchButton,
+} from "./style";
+import logo from "../../assets/logo80x45.png";
 import InputHeader from "../InputHeader/InputHeader";
 import MenuButton from "../MenuButton/MenuButton";
 import LogoutButton from "../LogoutButton/LogoutButton";
@@ -13,10 +18,17 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import schema from "./validation";
 import { useNavigate } from "react-router-dom";
 import { SearchContext } from "../../providers/SearchContext";
+import { FiSearch } from "react-icons/fi";
 
 const Header = () => {
-  const { animes, getFiltredAnimes, getFiltredUsers, profileUsers } =
-    useContext(SearchContext);
+  const {
+    animes,
+    getFiltredAnimes,
+    getFiltredUsers,
+    filtredListsCustom,
+    getFiltredListsCustom,
+    profileUsers,
+  } = useContext(SearchContext);
 
   const [isOpen, setIsOpen] = useState(false);
   const changeIsOpen = () => {
@@ -39,6 +51,7 @@ const Header = () => {
     const exec = async () => {
       getFiltredAnimes(formData.name);
       getFiltredUsers(formData.name);
+      getFiltredListsCustom(formData.name);
       navigate(`/search/${formData.name}`);
     };
     exec();
@@ -58,7 +71,9 @@ const Header = () => {
             placeholder="Pesquisar por Anime ou perfil"
             type="text"
           />
-          <button type="submit">Pesquisar</button>
+          <StyledSearchButton type="submit">
+            <FiSearch />
+          </StyledSearchButton>
         </form>
 
         <MenuButton

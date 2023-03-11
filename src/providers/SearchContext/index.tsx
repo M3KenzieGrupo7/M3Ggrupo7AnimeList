@@ -7,13 +7,15 @@ import { AnimesListContext } from "../AnimesListContext";
 import { IAnimeList } from "../AnimesListContext/type";
 import { LoadingContext } from "../LoadingContext";
 import { IDefaultProviderProps, IUser } from "../UserContext/types";
-import {} from "./type";
+import { ICustomList } from "./type";
 
 interface ISearchContextProps {
   getFiltredAnimes: (nameAnime: string) => Promise<void>;
   getFiltredUsers: (nameAnime: string) => Promise<void>;
+  getFiltredListsCustom: (nameList: string) => Promise<void>;
   animes: IAnimeList[] | undefined;
   profileUsers: IUser[] | undefined;
+  filtredListsCustom: ICustomList[] | undefined;
 }
 export const SearchContext = createContext({} as ISearchContextProps);
 
@@ -22,6 +24,7 @@ export const SearchProvider = ({ children }: IDefaultProviderProps) => {
 
   const [animes, setAnimes] = useState<IAnimeList[]>();
   const [profileUsers, setProfileUsers] = useState<IUser[]>();
+  const [filtredListsCustom, setFiltredListsCustom] = useState<ICustomList[]>();
 
   const getFiltredAnimes = async (nameAnime: string) => {
     setLoading(true);
@@ -32,6 +35,25 @@ export const SearchProvider = ({ children }: IDefaultProviderProps) => {
         },
       });
       setAnimes(response.data);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.error(error);
+    }
+  };
+  const getFiltredListsCustom = async (nameList: string) => {
+    setLoading(true);
+    const token = localStorage.getItem("GeekAnimes:@token");
+    try {
+      const response = await api.get<ICustomList[]>(`/customlist?`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        params: {
+          name_like: nameList,
+        },
+      });
+      setFiltredListsCustom(response.data);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -56,7 +78,14 @@ export const SearchProvider = ({ children }: IDefaultProviderProps) => {
 
   return (
     <SearchContext.Provider
-      value={{ animes, profileUsers, getFiltredAnimes, getFiltredUsers }}
+      value={{
+        animes,
+        profileUsers,
+        filtredListsCustom,
+        getFiltredAnimes,
+        getFiltredUsers,
+        getFiltredListsCustom,
+      }}
     >
       {children}
     </SearchContext.Provider>

@@ -35,7 +35,6 @@ export const StyledLink = styled(Link)`
   color: ${({ theme }) => theme.colors.white};
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 36px 0px 43px;
-  display: inline-block;
   vertical-align: middle;
   -webkit-transform: perspective(1px) translateZ(0);
   transform: perspective(1px) translateZ(0);

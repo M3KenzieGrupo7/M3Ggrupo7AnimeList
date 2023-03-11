@@ -20,6 +20,9 @@ export const StyledHeader = styled.header`
   padding: 15px;
   align-items: center;
   gap: 10px;
+  form {
+    display: flex;
+  }
 
   @media (min-width: 720px) {
   }
@@ -73,4 +76,17 @@ export const HeaderDropBox = styled.div<IHeaderStyleProps>`
       width: fit-content;
     }
   }
+`;
+
+export const StyledSearchButton = styled.button`
+  background-color: transparent;
+  width: 45px;
+  height: 45px;
+  text-align: center;
+  padding: 5px;
+  color: ${({ theme }) => theme.colors.white};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 `;

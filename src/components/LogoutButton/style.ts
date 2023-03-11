@@ -8,7 +8,6 @@ export const StyledButton = styled.button`
   padding: 5px;
   color: ${({ theme }) => theme.colors.white};
   display: flex;
-  display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
