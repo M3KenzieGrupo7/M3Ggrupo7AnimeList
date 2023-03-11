@@ -20,9 +20,14 @@ export const AnimesListContext = createContext({} as IAnimesContext);
 export const AnimesListProvider = ({ children }: IDefaultProviderProps) => {
   const [animes, setAnimes] = useState<IAnimeList[]>([]);
   const [animeFound, setAnimeFound] = useState<IAnimeList | null>(null);
+  const localStorageListAnimesFavorite = localStorage.getItem(
+    "GeekAnimes:@favoriteAnime"
+  );
 
   const [listAnimesFavorite, setListAnimesFavorite] = useState<IAnimeList[]>(
-    []
+    localStorageListAnimesFavorite
+      ? JSON.parse(localStorageListAnimesFavorite)
+      : []
   );
   useEffect(() => {
     const listAnimes = async () => {
@@ -73,6 +78,13 @@ export const AnimesListProvider = ({ children }: IDefaultProviderProps) => {
       setListAnimesFavorite([...listAnimesFavorite, animeToAdd]);
     }
   };
+
+  useEffect(() => {
+    localStorage.setItem(
+      "GeekAnimes:@favoriteAnime",
+      JSON.stringify(listAnimesFavorite)
+    );
+  }, [listAnimesFavorite]);
 
   const removeAnimeToListFavorite = (animeId: number) => {
     const productRemove = listAnimesFavorite.filter(

@@ -1,4 +1,5 @@
 import { FaHeart } from "react-icons/fa";
+import { MdPlaylistAdd } from "react-icons/md";
 import { StyledAnimeCard } from "./style";
 import { IAnimeList } from "../../../providers/AnimesListContext/type";
 import { CustomListContext } from "../../../providers/ListCustom";
@@ -36,16 +37,20 @@ const AnimeCard = ({
       <div className="content">
         <p>{anime.synopsis}</p>
       </div>
-      <button
-        id={String(anime.id)}
-        onClick={() => {
-          setAnimeSelectedID(anime.id);
-          openModalEdit(userID);
-        }}
-      >
-        Adicionar
-      </button>
-      <FaHeart onClick={() => addAnimeToListFavorite(anime)}></FaHeart>
+      <div className="containerBtns">
+        <MdPlaylistAdd
+          className="btnAddList"
+          id={String(anime.id)}
+          onClick={() => {
+            setOpen("block");
+            setAnimeSelectedID(anime.id);
+          }}
+        ></MdPlaylistAdd>
+        <FaHeart
+          className="btnFavorite"
+          onClick={() => addAnimeToListFavorite(anime)}
+        ></FaHeart>
+      </div>
     </StyledAnimeCard>
   );
 };
