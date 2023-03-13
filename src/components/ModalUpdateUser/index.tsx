@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import React, { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import InputModal from "../InputModal/InputModal";
 import { Modal, ModalBackDrop } from "./style";
@@ -12,12 +12,13 @@ interface IModalProps {
 }
 
 interface IUpdateProfile {
-  nickname?: string;
+  nickname: string;
   background: string;
 }
 
-const ModalCreateList = ({ isOpen, setModalIsOpen }: IModalProps) => {
-  const { editUser } = useContext(UserContext);
+const ModalUpdateUser = ({ isOpen, setModalIsOpen }: IModalProps) => {
+  const { editUser, user } = useContext(UserContext);
+
   const {
     register,
     handleSubmit,
@@ -38,8 +39,14 @@ const ModalCreateList = ({ isOpen, setModalIsOpen }: IModalProps) => {
     };
     setModalIsOpen(false);
     exec();
-    reset();
   };
+
+  useEffect(() => {
+    let defaultValues = {} as IUpdateProfile;
+    defaultValues.nickname = user?.nickname || "";
+    defaultValues.background = user?.background || "";
+    reset(defaultValues);
+  }, []);
 
   return isOpen ? (
     <ModalBackDrop>
@@ -53,29 +60,27 @@ const ModalCreateList = ({ isOpen, setModalIsOpen }: IModalProps) => {
           Fechar
         </button>
 
-        <div>
-          <InputModal
-            id="nickname"
-            label="Nome da Lista"
-            placeholder="Nickname..."
-            register={register("nickname")}
-            type="text"
-            key={1}
-            width={"100px"}
-          ></InputModal>
+        <InputModal
+          id="nickname"
+          label="Nome da Lista"
+          placeholder="Nickname..."
+          register={register("nickname")}
+          type="text"
+          key={1}
+          width={"250px"}
+        ></InputModal>
 
-          <InputModal
-            id="avatar"
-            label="Foto de perfil"
-            placeholder="Nova foto de perfil"
-            register={register("background")}
-            type="text"
-            key={2}
-            width={"100px"}
-          ></InputModal>
-        </div>
+        <InputModal
+          id="avatar"
+          label="Foto de perfil"
+          placeholder="Nova foto de perfil"
+          register={register("background")}
+          type="text"
+          key={2}
+          width={"250px"}
+        ></InputModal>
 
-        <button type="submit">Criar lista</button>
+        <button type="submit">Atualizar</button>
       </Modal>
     </ModalBackDrop>
   ) : (
@@ -83,4 +88,4 @@ const ModalCreateList = ({ isOpen, setModalIsOpen }: IModalProps) => {
   );
 };
 
-export default ModalCreateList;
+export default ModalUpdateUser;

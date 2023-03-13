@@ -1,16 +1,10 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { api } from "../../services/api";
 import { IAnimeList } from "../AnimesListContext/type";
 import { LoadingContext } from "../LoadingContext";
 import { IDefaultProviderProps } from "../UserContext/types";
-import {
-  ICustomList,
-  ICustomListEdit,
-  ICustomListRegister,
-  IIdAnimeCustomList,
-} from "./type";
+import { ICustomList, ICustomListEdit, ICustomListRegister } from "./type";
 
 interface ICustomListContext {
   listsCustom: ICustomList[];

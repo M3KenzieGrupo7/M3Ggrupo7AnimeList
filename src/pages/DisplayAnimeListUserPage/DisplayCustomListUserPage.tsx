@@ -1,15 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import BTNBackProfilePage from "../../components/BTNBackProfilePage/BTNBackProfilePage";
+import CardAnimeCustomList from "../../components/CardAnimeCustomList/CardAnimeCustomList";
 import CardAnimeUserCustomList from "../../components/CardAnimeUserCustomList/CardAnimeUserCustomList";
 import { IAnimeList } from "../../providers/AnimesListContext/type";
 
 import { CustomListContext } from "../../providers/ListCustom";
-import {
-  AnimeCardsList,
-  StyledBTNBack,
-  StyledHeaderDisplayList,
-} from "./style";
+import { AnimeCardsList, StyledBTNBack } from "./style";
 
 const DisplayCustomListUserPage = () => {
   const { getSpecificsAnimes } = useContext(CustomListContext);
@@ -39,7 +35,7 @@ const DisplayCustomListUserPage = () => {
       </StyledBTNBack>
       <AnimeCardsList>
         {animes?.map(({ name, urlImage, author, eps, genre, synopsis, id }) => (
-          <CardAnimeUserCustomList
+          <CardAnimeCustomList
             author={author}
             eps={eps}
             genre={genre}

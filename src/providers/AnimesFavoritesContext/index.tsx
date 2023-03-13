@@ -1,7 +1,7 @@
 import { createContext, useState } from "react";
 import { api } from "../../services/api";
 import { IDefaultProviderProps, IIdUser } from "../UserContext/types";
-import { IFavoriteAnimes, IIdFavoritesAnime } from "./type";
+import { IFavoriteAnimes } from "./type";
 
 interface IAnimeFavoriteContext {
   animeFavoriteRegister: (

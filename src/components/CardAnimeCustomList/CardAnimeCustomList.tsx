@@ -11,7 +11,7 @@ interface ICardProps extends IAnimeList {
   idList: number;
 }
 
-const CardAnimeUserCustomList = ({
+const CardAnimeCustomList = ({
   id,
   author,
   eps,
@@ -33,28 +33,8 @@ const CardAnimeUserCustomList = ({
       <h1>{name}</h1>
       <h4>- {eps} eps</h4>
       <h4>- {author}</h4>
-
-      <button
-        onClick={() => {
-          const newList = listAnimes.filter((anime) => anime.id != id);
-          setAnimeList(newList);
-          let listIds: number[] = [];
-          newList.forEach((anime) => listIds.push(anime.id));
-
-          const CustomList: ICustomListEdit = {
-            id: idList,
-            amountAnimes: listIds.length,
-            animesIds: listIds,
-          };
-          removeAnimeInCustomList(idList, CustomList);
-
-          navigate(`/profile/customList/${idList}/${listIds}`);
-        }}
-      >
-        Remover
-      </button>
     </Card>
   );
 };
 
-export default CardAnimeUserCustomList;
+export default CardAnimeCustomList;

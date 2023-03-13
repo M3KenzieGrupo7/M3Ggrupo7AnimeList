@@ -1,9 +1,5 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import Loading from "../../components/Loading";
+import { createContext, useContext, useState } from "react";
 import { api } from "../../services/api";
-import { AnimesListContext } from "../AnimesListContext";
 import { IAnimeList } from "../AnimesListContext/type";
 import { LoadingContext } from "../LoadingContext";
 import { IDefaultProviderProps, IUser } from "../UserContext/types";
