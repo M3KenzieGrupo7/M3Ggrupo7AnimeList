@@ -48,7 +48,8 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
       toast.success("Login efetuado");
       setTimeout(() => navigate("/dashboard"), 1300);
     } catch (error) {
-      console.error(error);
+      const currentError = error as AxiosError;
+      toast.error("Login ou E-mail incorretos");
     }
   };
 
