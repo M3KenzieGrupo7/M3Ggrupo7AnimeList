@@ -1,15 +1,24 @@
 import { useContext } from "react";
 import { FcFullTrash } from "react-icons/fc";
 import { StyledFavoriteCard } from "./style";
-import { IAnimeListFavorite } from "../../../providers/AnimesListContext/type";
+import { IAnimeList } from "../../../providers/AnimesListContext/type";
 import { AnimesListContext } from "../../../providers/AnimesListContext";
+import { AnimeFavoriteContext } from "../../../providers/AnimesFavoritesContext";
 
 interface IAnimeFavoriteProps {
-  anime: IAnimeListFavorite;
+  anime: IAnimeList;
 }
+
 
 const CardFavorite = ({ anime }: IAnimeFavoriteProps) => {
   const { removeAnimeToListFavorite } = useContext(AnimesListContext);
+  const { animeFavoriteDelete, animesFavoritesUser } = useContext(AnimeFavoriteContext);
+
+  const refreshFavorites = (id: number) => {
+    animeFavoriteDelete(id)
+    animesFavoritesUser()
+  }
+
   return (
     <StyledFavoriteCard key={anime.id}>
       <figure>
@@ -20,7 +29,7 @@ const CardFavorite = ({ anime }: IAnimeFavoriteProps) => {
       </div>
       <FcFullTrash
         className="btnRemove"
-        onClick={() => removeAnimeToListFavorite(anime.id)}
+        onClick={() => refreshFavorites(anime.id)}
       ></FcFullTrash>
     </StyledFavoriteCard>
   );

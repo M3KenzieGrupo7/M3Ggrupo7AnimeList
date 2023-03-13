@@ -11,3 +11,12 @@ export interface IFavoriteAnimes {
   animesIds: number[];
   id: number;
 }
+
+export interface IAnimeEdittFavorite {
+  name?: string;
+  urlImage?: string;
+  eps?: number;
+  genre?: string[];
+  author?: string;
+  synopsis?: string;
+}

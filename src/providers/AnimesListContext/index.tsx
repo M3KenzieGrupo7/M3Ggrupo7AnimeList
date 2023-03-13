@@ -1,6 +1,8 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { api } from "../../services/api";
+import { AnimeFavoriteContext } from "../AnimesFavoritesContext";
 import { IDefaultProviderProps } from "../UserContext/types";
 import { IAnimeList, IAnimeListFavorite } from "./type";
 
@@ -8,7 +10,7 @@ interface IAnimesContext {
   animes: IAnimeList[];
   listAnimesFavorite: IAnimeListFavorite[];
   setListAnimesFavorite: React.Dispatch<React.SetStateAction<IAnimeList[]>>;
-  addAnimeToListFavorite: (animeToAdd: IAnimeList) => void;
+  addAnimeToListFavorite: (animeToAdd: IAnimeList, id: number) => void;
   removeAnimeToListFavorite: (animeId: number) => void;
   listAnimesRegister: (formData: IAnimeList) => Promise<void>;
   searchAnimeList: (name: string) => Promise<void>;
@@ -29,6 +31,9 @@ export const AnimesListProvider = ({ children }: IDefaultProviderProps) => {
       ? JSON.parse(localStorageListAnimesFavorite)
       : []
   );
+
+  const navigate = useNavigate()
+
   useEffect(() => {
     const listAnimes = async () => {
       try {
@@ -70,14 +75,34 @@ export const AnimesListProvider = ({ children }: IDefaultProviderProps) => {
     }
   };
 
-  const addAnimeToListFavorite = (animeToAdd: IAnimeList) => {
+  const animeFavoriteRegister = async (formData: IAnimeList, animeId: number) => {
+    const token = localStorage.getItem("GeekAnimes:@token");
+    console.log(animeId)
+    if (token) {
+      try {
+        const response = await api.post<IAnimeList>(`/users/${animeId}/favorites`, formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        navigate("/dashboard");
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
+  const addAnimeToListFavorite = (animeToAdd: IAnimeList, id: number) => {
+    console.log(id)
     if (listAnimesFavorite.includes(animeToAdd)) {
       toast.warn("Este anime já foi adicionado à lista de favoritos");
     } else {
       toast.success("Anime adicionado à lista de favoritos");
       setListAnimesFavorite([...listAnimesFavorite, animeToAdd]);
+      animeFavoriteRegister(animeToAdd, id);
     }
   };
+
 
   useEffect(() => {
     localStorage.setItem(

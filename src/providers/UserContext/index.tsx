@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../../services/api";
 import {
@@ -13,6 +13,7 @@ import {
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AxiosError } from "axios";
+import { AnimeFavoriteContext } from "../AnimesFavoritesContext";
 
 interface IUserContext {
   user: IUser | null;
@@ -141,6 +142,7 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
     localStorage.removeItem("GeekAnimes:@token");
     localStorage.removeItem("GeekAnimes:@idUser");
     localStorage.removeItem("GeekAnimes:@user");
+    localStorage.removeItem("GeekAnimes:@favoriteAnime")
     navigate("/");
   };
 

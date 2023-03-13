@@ -18,4 +18,9 @@ export const GlobalStyles = createGlobalStyle`
     cursor: pointer;
   }
 
+  .App{
+    display: flex;
+    justify-content: center;
+  }
+
 `;

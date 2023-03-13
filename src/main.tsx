@@ -16,17 +16,17 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <BrowserRouter>
       <LoadingProvider>
         <UserProvider>
-          <AnimesListProvider>
-            <CustomListProvider>
-              <AnimeFavoriteProvider>
+          <AnimeFavoriteProvider>
+            <AnimesListProvider>
+              <CustomListProvider>
                 <SearchProvider>
                   <ThemeProvider theme={mainTheme}>
                     <App />
                   </ThemeProvider>
                 </SearchProvider>
-              </AnimeFavoriteProvider>
-            </CustomListProvider>
-          </AnimesListProvider>
+              </CustomListProvider>
+            </AnimesListProvider>
+          </AnimeFavoriteProvider>
         </UserProvider>
       </LoadingProvider>
     </BrowserRouter>

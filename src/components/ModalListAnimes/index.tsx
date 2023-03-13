@@ -36,20 +36,11 @@ const ModalEditAnimes = ({ animeid }: IFormAddProps) => {
   });
 
   const submit: SubmitHandler<IFormDataCustomList> = (data) => {
-    // event?.preventDefault();
     animeListCustomRegister(data);
     reset();
   };
 
-  const submit2: SubmitHandler<IFormDataCustomList> = (data) => {
-    event?.preventDefault();
-    console.log(data);
-    reset();
-  };
-
-  const data = () => {
-    console.log("click");
-  };
+ 
   return (
     <StyledModalEdit open={open}>
       <div className="container-modal">
