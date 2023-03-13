@@ -28,7 +28,10 @@ const DisplayCustomLists = () => {
       <StyledDivList>
         {listsCustom.map(({ name, animesIds, id }) => {
           return (
-            <StyledLink to={`/profile/customList/${id}/${animesIds}`}>
+            <StyledLink
+              to={`/profile/customList/${id}/${animesIds}`}
+              key={id + "customlist"}
+            >
               {name}
             </StyledLink>
           );

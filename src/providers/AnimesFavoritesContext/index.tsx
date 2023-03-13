@@ -59,7 +59,6 @@ export const AnimeFavoriteProvider = ({ children }: IDefaultProviderProps) => {
             },
           }
         );
-        //   navigate("/dashboard");
       } catch (error) {
         console.error(error);
       }
@@ -82,7 +81,6 @@ export const AnimeFavoriteProvider = ({ children }: IDefaultProviderProps) => {
             },
           }
         );
-        //   navigate("/dashboard");
       } catch (error) {
         console.error(error);
       }
@@ -98,7 +96,6 @@ export const AnimeFavoriteProvider = ({ children }: IDefaultProviderProps) => {
             Authorization: `Bearer ${token}`,
           },
         });
-        //   navigate("/dashboard");
       } catch (error) {
         console.error(error);
       }

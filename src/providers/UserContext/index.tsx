@@ -71,7 +71,6 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
             JSON.stringify(response.data)
           );
           setUser(response.data);
-          //   navigate("/dashboard");
         } catch (error) {
           console.error(error);
         }

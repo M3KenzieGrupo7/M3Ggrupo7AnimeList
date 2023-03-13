@@ -32,6 +32,7 @@ const SearchPage = () => {
                 urlImage={anime.urlImage}
                 genre={anime.genre}
                 synopsis={anime.synopsis}
+                key={anime.id + anime.author}
               ></CardAnimeSearch>
             );
           })}
@@ -59,7 +60,16 @@ const SearchPage = () => {
         <h2>Listas</h2>
         <section>
           {filtredListsCustom?.map((list) => {
-            return <StyledLink to={""}>{list.name} </StyledLink>;
+            return (
+              <StyledLink
+                to={`/user/${list.userId}/customList/${
+                  list.animesIds.length > 0 ? list.animesIds : 0
+                }`}
+                key={list.id + list.userId}
+              >
+                {list.name}
+              </StyledLink>
+            );
           })}
           {filtredListsCustom ? null : (
             <h3>Não foi possivel Localizar nenhuma Lista</h3>

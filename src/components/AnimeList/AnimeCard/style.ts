@@ -21,7 +21,7 @@ export const StyledAnimeCard = styled.li`
       white-space: wrap;
       width: 100%;
       max-height: 40px;
-      overflow: hidden; /* "overflow" value must be different from "visible" */
+      overflow: hidden;
       text-overflow: ellipsis;
 
       font-family: "Inter", sans-serif;

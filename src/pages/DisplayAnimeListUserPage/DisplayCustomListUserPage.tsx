@@ -15,12 +15,14 @@ const DisplayCustomListUserPage = () => {
   const { getSpecificsAnimes } = useContext(CustomListContext);
   let { id, idList } = useParams();
   const [animes, setAnimes] = useState<IAnimeList[]>();
+  const [quantityAnimes, setQuantityAnimes] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
     const exec = async () => {
       const animes = await getSpecificsAnimes(JSON.parse("[" + idList + "]"));
       setAnimes(animes);
+      setQuantityAnimes(animes.length);
     };
 
     exec();
@@ -51,7 +53,7 @@ const DisplayCustomListUserPage = () => {
             idList={Number(idList)}
           />
         ))}
-        {animes ? null : (
+        {quantityAnimes > 0 ? null : (
           <div>
             <h1>Nenhum Anime Adicionado na Lista :( </h1>
           </div>

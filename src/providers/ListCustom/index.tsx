@@ -100,7 +100,7 @@ export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
           });
           setListsCustom(response.data);
         } catch (error) {
-          console.log(error);
+          console.error(error);
         }
       }
     };
@@ -113,7 +113,7 @@ export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
       localStorage.getItem("GeekAnimes:@idUser") || "null"
     );
     formData["userId"] = idUser;
-    console.log(formData);
+
     if (token) {
       try {
         const response = await api.post<ICustomList>(`/customlist`, formData, {
