@@ -8,10 +8,8 @@ const DashBoard = () => {
     <>
       <Header></Header>
       <StyledMain>
-        {/* <div> */}
         <AnimeList></AnimeList>
         <AnimeListFavorites></AnimeListFavorites>
-        {/* </div> */}
       </StyledMain>
     </>
   );
