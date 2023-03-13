@@ -6,7 +6,8 @@ import { AnimeFavoriteContext } from "../AnimesFavoritesContext";
 import { LoadingContext } from "../LoadingContext";
 import { IDefaultProviderProps } from "../UserContext/types";
 import { IAnimeList, IAnimeListFavorite } from "./type";
-
+import { v4 as Uuid } from "uuid";
+import { number } from "yup";
 interface IAnimesContext {
   animes: IAnimeList[];
   listAnimesFavorite: IAnimeListFavorite[];
@@ -69,11 +70,11 @@ export const AnimesListProvider = ({ children }: IDefaultProviderProps) => {
   };
 
   const animeFavoriteRegister = async (
-    formData: IAnimeList,
+    formData: Omit<IAnimeList, "id">,
     animeId: number
   ) => {
     const token = localStorage.getItem("GeekAnimes:@token");
-    console.log(animeId);
+
     if (token) {
       try {
         const response = await api.post<IAnimeList>(
