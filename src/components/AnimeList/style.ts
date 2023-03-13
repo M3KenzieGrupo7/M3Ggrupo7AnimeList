@@ -18,15 +18,14 @@ export const StyledContainerAnimeList = styled.div`
   border-radius: 4px;
   ul {
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     justify-content: center;
-    gap: 20px;
+    gap: 15px;
     width: 100%;
     padding: 20px;
     background-color: ${({ theme }) => theme.colors.grey1};
     position: relative;
     border-radius: 4px;
-    overflow-x: scroll;
   }
   ul::-webkit-scrollbar {
     width: 10px;

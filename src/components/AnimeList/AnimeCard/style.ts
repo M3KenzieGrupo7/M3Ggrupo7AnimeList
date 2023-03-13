@@ -1,6 +1,6 @@
 import styled from "styled-components";
 export const StyledAnimeCard = styled.li`
-  width: 100px;
+  width: 180px;
   height: 200px;
   background-color: var(--grey4);
   border-radius: 4px;
@@ -13,6 +13,7 @@ export const StyledAnimeCard = styled.li`
     width: 100%;
     height: 100px;
     border-radius: 4px 4px 0 0;
+    object-fit: cover;
   }
   .content {
     height: 70px;

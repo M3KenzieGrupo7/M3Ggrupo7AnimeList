@@ -3,7 +3,11 @@ import { AnimeFavoriteContext } from "../../providers/AnimesFavoritesContext";
 import { AnimesListContext } from "../../providers/AnimesListContext";
 import { IAnimeList } from "../../providers/AnimesListContext/type";
 import CardFavorite from "./CardFavorite/CardFavorite";
-import { StyledContainerFavoriteList, StyledModalFavorite } from "./style";
+import {
+  StyledButtonRemove,
+  StyledContainerFavoriteList,
+  StyledModalFavorite,
+} from "./style";
 import { api } from "../../services/api";
 interface IPropsModal {
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -41,13 +45,13 @@ const AnimeListFavorites = ({ openFavorite, setOpenModal }: IPropsModal) => {
   return (
     <StyledModalFavorite>
       <StyledContainerFavoriteList className="containerFavoriteList">
-        <button
+        <StyledButtonRemove
           onClick={() => {
             setOpenModal(false);
           }}
         >
           Fechar
-        </button>
+        </StyledButtonRemove>
         <h3>Lista de Favoritos</h3>
         <ul>
           {listAnimesFavorite.map((anime) => (
