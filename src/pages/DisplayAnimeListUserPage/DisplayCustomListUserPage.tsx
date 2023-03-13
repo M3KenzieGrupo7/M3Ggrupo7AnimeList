@@ -1,26 +1,24 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import BTNBackProfilePage from "../../components/BTNBackProfilePage/BTNBackProfilePage";
+import CardAnimeCustomList from "../../components/CardAnimeCustomList/CardAnimeCustomList";
 import CardAnimeUserCustomList from "../../components/CardAnimeUserCustomList/CardAnimeUserCustomList";
 import { IAnimeList } from "../../providers/AnimesListContext/type";
 
 import { CustomListContext } from "../../providers/ListCustom";
-import {
-  AnimeCardsList,
-  StyledBTNBack,
-  StyledHeaderDisplayList,
-} from "./style";
+import { AnimeCardsList, StyledBTNBack } from "./style";
 
 const DisplayCustomListUserPage = () => {
   const { getSpecificsAnimes } = useContext(CustomListContext);
   let { id, idList } = useParams();
   const [animes, setAnimes] = useState<IAnimeList[]>();
+  const [quantityAnimes, setQuantityAnimes] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
     const exec = async () => {
       const animes = await getSpecificsAnimes(JSON.parse("[" + idList + "]"));
       setAnimes(animes);
+      setQuantityAnimes(animes.length);
     };
 
     exec();
@@ -37,7 +35,7 @@ const DisplayCustomListUserPage = () => {
       </StyledBTNBack>
       <AnimeCardsList>
         {animes?.map(({ name, urlImage, author, eps, genre, synopsis, id }) => (
-          <CardAnimeUserCustomList
+          <CardAnimeCustomList
             author={author}
             eps={eps}
             genre={genre}
@@ -51,7 +49,7 @@ const DisplayCustomListUserPage = () => {
             idList={Number(idList)}
           />
         ))}
-        {animes ? null : (
+        {quantityAnimes > 0 ? null : (
           <div>
             <h1>Nenhum Anime Adicionado na Lista :( </h1>
           </div>

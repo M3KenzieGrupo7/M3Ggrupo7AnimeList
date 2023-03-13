@@ -41,8 +41,6 @@ const FormAddList = ({ animeid }: IFormAddProps) => {
 
       list.animesIds = listUpdateAnimesID;
 
-      console.log(list);
-
       await animeListCustomEdit(list, Number(id));
       toast.success("Anime Adiconado a Lista " + list.name + " com sucesso!");
     };

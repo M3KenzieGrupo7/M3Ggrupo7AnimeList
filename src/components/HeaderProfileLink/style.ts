@@ -10,15 +10,21 @@ export const StyledPerfil = styled(Link)`
   height: 80px;
   box-sizing: border-box;
   gap: 10px;
+  transition: transform 100ms cubic-bezier(0.4, 0, 1, 1) 0s;
   img {
     width: 50px;
     height: 50px;
     border-radius: 50px;
     object-fit: cover;
   }
+:hover{
+  
+  transform: scale(1.08);
+}
   p {
     color: ${({ theme }) => theme.colors.white};
-    text-decoration: underline;
+   
+    font-weight: bold;
   }
 
   @media (min-width: 720px) {

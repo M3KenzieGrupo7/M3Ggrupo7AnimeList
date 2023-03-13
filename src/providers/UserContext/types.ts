@@ -49,6 +49,7 @@ export interface IEditFormValues {
   email?: string;
   password?: string;
   repeatPassword?: string;
+  background?: string;
 }
 
 export interface IIdUser {

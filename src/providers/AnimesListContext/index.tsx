@@ -68,7 +68,6 @@ export const AnimesListProvider = ({ children }: IDefaultProviderProps) => {
             Authorization: `Bearer ${token}`,
           },
         });
-        //   navigate("/dashboard");
       } catch (error) {
         console.error(error);
       }

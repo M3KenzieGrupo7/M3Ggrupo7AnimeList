@@ -100,7 +100,6 @@ export const AnimeFavoriteProvider = ({ children }: IDefaultProviderProps) => {
             },
           }
         );
-        //   navigate("/dashboard");
       } catch (error) {
         console.error(error);
       }
@@ -135,7 +134,7 @@ export const AnimeFavoriteProvider = ({ children }: IDefaultProviderProps) => {
   return (
     <AnimeFavoriteContext.Provider
       value={{
-        // animeFavoriteRegister,
+        //animeFavoriteRegister,
         animeFavoriteEdit,
         animeFavoriteDelete,
         animesFavoritesList,

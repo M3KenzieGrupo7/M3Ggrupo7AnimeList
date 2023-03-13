@@ -1,16 +1,10 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { api } from "../../services/api";
 import { IAnimeList } from "../AnimesListContext/type";
 import { LoadingContext } from "../LoadingContext";
 import { IDefaultProviderProps } from "../UserContext/types";
-import {
-  ICustomList,
-  ICustomListEdit,
-  ICustomListRegister,
-  IIdAnimeCustomList,
-} from "./type";
+import { ICustomList, ICustomListEdit, ICustomListRegister } from "./type";
 
 interface ICustomListContext {
   listsCustom: ICustomList[];
@@ -100,7 +94,7 @@ export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
           });
           setListsCustom(response.data);
         } catch (error) {
-          console.log(error);
+          console.error(error);
         }
       }
     };
@@ -113,7 +107,7 @@ export const CustomListProvider = ({ children }: IDefaultProviderProps) => {
       localStorage.getItem("GeekAnimes:@idUser") || "null"
     );
     formData["userId"] = idUser;
-    console.log(formData);
+
     if (token) {
       try {
         const response = await api.post<ICustomList>(`/customlist`, formData, {

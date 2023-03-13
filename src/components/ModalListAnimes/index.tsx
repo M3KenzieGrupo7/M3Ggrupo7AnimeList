@@ -18,29 +18,8 @@ interface IFormAddProps {
   animeid: number;
 }
 const ModalEditAnimes = ({ animeid }: IFormAddProps) => {
-  const {
-    listsCustom,
-    animeListCustomRegister,
-    open,
-    setOpen,
-    getSpecificListsCustom,
-  } = useContext(CustomListContext);
+  const { open, setOpen } = useContext(CustomListContext);
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<IFormDataCustomList>({
-    resolver: yupResolver(schema),
-  });
-
-  const submit: SubmitHandler<IFormDataCustomList> = (data) => {
-    animeListCustomRegister(data);
-    reset();
-  };
-
- 
   return (
     <StyledModalEdit open={open}>
       <div className="container-modal">

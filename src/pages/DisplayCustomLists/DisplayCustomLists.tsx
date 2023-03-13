@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
 import ModalCreateList from "../../components/ModalCreateList/ModalCreateList";
 import { CustomListContext } from "../../providers/ListCustom";
 import { UserContext } from "../../providers/UserContext";
@@ -28,7 +27,10 @@ const DisplayCustomLists = () => {
       <StyledDivList>
         {listsCustom.map(({ name, animesIds, id }) => {
           return (
-            <StyledLink to={`/profile/customList/${id}/${animesIds}`}>
+            <StyledLink
+              to={`/profile/customList/${id}/${animesIds}`}
+              key={id + "customlist"}
+            >
               {name}
             </StyledLink>
           );

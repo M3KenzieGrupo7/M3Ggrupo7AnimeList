@@ -30,6 +30,9 @@ export const StyledMainRegister = styled.main`
   a {
     color: white;
   }
+  a:hover{
+    color:${({theme})=> theme.colors.green1};
+  }
   @media (min-width: 720px) {
     .info-box-form {
       width: 45%;

@@ -49,7 +49,8 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
       toast.success("Login efetuado");
       setTimeout(() => navigate("/dashboard"), 1300);
     } catch (error) {
-      console.error(error);
+      const currentError = error as AxiosError;
+      toast.error("Login ou E-mail incorretos");
     }
   };
 
@@ -71,7 +72,6 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
             JSON.stringify(response.data)
           );
           setUser(response.data);
-          //   navigate("/dashboard");
         } catch (error) {
           console.error(error);
         }
