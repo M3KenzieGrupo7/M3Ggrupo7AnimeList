@@ -45,6 +45,8 @@ export const StyledLink = styled(Link)`
   transition-property: color;
   -webkit-transition-duration: 0.3s;
   transition-duration: 0.3s;
+  font-size: 1.3rem;
+  font-weight: bold;
 
   :before {
     content: "";

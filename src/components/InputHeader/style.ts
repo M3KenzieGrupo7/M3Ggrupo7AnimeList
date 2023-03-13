@@ -7,4 +7,10 @@ export const StyledInput = styled.input`
   border-radius: ${({ theme }) => theme.fonts.radius4};
   outline: none;
   border-radius: 4px;
+  ::placeholder{
+    font-weight:bold;
+  }
+  :hover{
+    background-color: ${({ theme }) => theme.colors.green1};
+  }
 `;

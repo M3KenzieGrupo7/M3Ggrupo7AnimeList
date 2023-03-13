@@ -12,8 +12,8 @@ export const mainTheme = {
   },
   colors: {
     colorPrimary: "#0F54A0",
-    colorSecundary: "#0EB770",
-    colorPrimaryFocus: " #151E71",
+    colorSecundary: "#0EB772",
+    colorPrimaryFocus: " #151E68",
     red1: " #ad0000",
     red2: " #820B44",
     white: "#FFFFFF",
@@ -22,8 +22,8 @@ export const mainTheme = {
     grey1: "#202125",
     grey: "#222121",
     green1: "#9ADCCB",
-    purple4: "#6D4D82",
+    purple4: "#CB6CE6",
     colorSucess: "#0EB770",
-    colorNegative: " #820B44",
+    colorNegative: " #820B46",
   },
 };
