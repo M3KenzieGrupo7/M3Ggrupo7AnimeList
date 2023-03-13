@@ -18,7 +18,8 @@ interface IFormAddProps {
   animeid: number;
 }
 const FormAddList = ({ animeid }: IFormAddProps) => {
-  const { listsCustom, animeListCustomEdit } = useContext(CustomListContext);
+  const { listsCustom, animeListCustomEdit, setOpen } =
+    useContext(CustomListContext);
 
   const {
     register,
@@ -45,6 +46,7 @@ const FormAddList = ({ animeid }: IFormAddProps) => {
     };
     exec();
     reset();
+    setOpen("none");
   };
 
   return (

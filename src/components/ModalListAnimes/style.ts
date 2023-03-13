@@ -5,7 +5,7 @@ interface iModalProps {
 }
 
 export const StyledModalEdit = styled.div<iModalProps>`
-  position: absolute;
+  position: fixed;
   display: ${(props) => props.open};
   align-items: center;
   justify-content: center;
@@ -73,8 +73,6 @@ export const StyledModalEdit = styled.div<iModalProps>`
           }
         }
       }
-
-
     }
   }
 

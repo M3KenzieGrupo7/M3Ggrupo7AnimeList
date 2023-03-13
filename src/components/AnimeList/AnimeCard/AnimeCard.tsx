@@ -4,10 +4,11 @@ import { StyledAnimeCard } from "./style";
 import { IAnimeList } from "../../../providers/AnimesListContext/type";
 import { CustomListContext } from "../../../providers/ListCustom";
 import { useContext } from "react";
+import { AnimeFavoriteContext } from "../../../providers/AnimesFavoritesContext";
 
 interface IAnimeProps {
   anime: IAnimeList;
-  addAnimeToListFavorite: (animeToAdd: IAnimeList) => void;
+  addAnimeToListFavorite: (animeToAdd: IAnimeList, id: number) => void;
   setAnimeSelectedID: React.Dispatch<React.SetStateAction<number>>;
 }
 
@@ -25,9 +26,16 @@ const AnimeCard = ({
   const userID = Number(localStorage.getItem("GeekAnimes:@idUser"));
 
   const openModalEdit = (id: number) => {
-    setOpen("block");
+    setOpen("flex");
     getSpecificListsCustom(id);
   };
+
+  const { animesFavoritesUser } = useContext(AnimeFavoriteContext);
+
+  const refreshFavorites = (anime: IAnimeList) => {
+    addAnimeToListFavorite(anime, userID);
+    animesFavoritesUser()
+  }
 
   return (
     <StyledAnimeCard>
@@ -42,13 +50,13 @@ const AnimeCard = ({
           className="btnAddList"
           id={String(anime.id)}
           onClick={() => {
-            setOpen("block");
+            setOpen("flex");
             setAnimeSelectedID(anime.id);
           }}
         ></MdPlaylistAdd>
         <FaHeart
           className="btnFavorite"
-          onClick={() => addAnimeToListFavorite(anime)}
+          onClick={() => refreshFavorites(anime)}
         ></FaHeart>
       </div>
     </StyledAnimeCard>

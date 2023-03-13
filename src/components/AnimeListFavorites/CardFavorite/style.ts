@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const StyledFavoriteCard = styled.li`
   width: 100px;
-  height: 190px;
+  height: 200px;
   background-color: var(--grey4);
   border-radius: 4px;
   background-color: #d9d9d9;
@@ -18,6 +18,11 @@ export const StyledFavoriteCard = styled.li`
     padding: 8px;
 
     p {
+      width: 100%;
+      max-height: 40px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-family: Inter, sans-serif;
       font-size: 11px;
       font-weight: 500;
     }

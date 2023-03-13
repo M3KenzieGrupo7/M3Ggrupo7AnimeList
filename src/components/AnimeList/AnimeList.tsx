@@ -11,15 +11,17 @@ const AnimeList = () => {
 
   return (
     <StyledContainerAnimeList>
-      <ModalEditAnimes animeid={animeSelectedID} />
-      {animes.map((anime: IAnimeList) => (
-        <AnimeCard
-          key={anime.id}
-          anime={anime}
-          setAnimeSelectedID={setAnimeSelectedID}
-          addAnimeToListFavorite={addAnimeToListFavorite}
-        />
-      ))}
+      <h3>Lista de animes</h3>
+      <div>
+        {animes.map((anime: IAnimeList) => (
+          <AnimeCard
+            key={anime.id}
+            anime={anime}
+            setAnimeSelectedID={setAnimeSelectedID}
+            addAnimeToListFavorite={addAnimeToListFavorite}
+          />
+        ))}
+      </div>
     </StyledContainerAnimeList>
   );
 };

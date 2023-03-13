@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const StyledFormNewList = styled.form`
+  width: 45%;
   .add-list {
     display: flex;
     flex-direction: column;

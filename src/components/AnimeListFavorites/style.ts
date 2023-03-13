@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 export const StyledContainerFavoriteList = styled.div`
-  width: 100%;
+  /* width: 100%;
   gap: 20px;
-  height: 600px;
+  height: 600px; */
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   flex-wrap: wrap;
   padding: 20px;
@@ -22,7 +22,7 @@ export const StyledContainerFavoriteList = styled.div`
   ul {
     display: flex;
     flex-wrap: nowrap;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
     gap: 20px;
     width: 100%;
