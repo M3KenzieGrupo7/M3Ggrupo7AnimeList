@@ -23,9 +23,6 @@ export const StyledHeader = styled.header`
   form {
     display: flex;
   }
-
-  @media (min-width: 720px) {
-  }
 `;
 
 export const HeaderDropBox = styled.div<IHeaderStyleProps>`
@@ -63,7 +60,7 @@ export const HeaderDropBox = styled.div<IHeaderStyleProps>`
   gap: 5px;
   padding: 15px;
   background-color: ${({ theme }) => theme.colors.grey2};
-  @media (min-width: 720px) {
+  @media (min-width: 1024px) {
     display: flex;
     position: unset;
     flex-direction: row;

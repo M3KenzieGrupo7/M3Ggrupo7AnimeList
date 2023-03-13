@@ -1,9 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import ModalCreateList from "../../components/ModalCreateList/ModalCreateList";
+import { useContext, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { CustomListContext } from "../../providers/ListCustom";
-import { UserContext } from "../../providers/UserContext";
-import { StyledBTNCreateList, StyledDivList, StyledLink } from "./style";
+import { StyledDivList, StyledLink } from "./style";
 
 const DisplayUserCustomLists = () => {
   const { listsCustom, getSpecificListsCustom } = useContext(CustomListContext);

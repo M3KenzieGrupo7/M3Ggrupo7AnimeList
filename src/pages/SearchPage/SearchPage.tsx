@@ -1,7 +1,6 @@
-import React, { useContext, useState } from "react";
+import { useContext } from "react";
 import { useParams } from "react-router-dom";
 import CardAnimeSearch from "../../components/CardAnimeSearch/CardAnimeSearch";
-import CardAnimeUserCustomList from "../../components/CardAnimeUserCustomList/CardAnimeUserCustomList";
 import CardUserSearch from "../../components/CardUserSearch/CardUserSearch";
 import Header from "../../components/Header/Header";
 import { SearchContext } from "../../providers/SearchContext";
