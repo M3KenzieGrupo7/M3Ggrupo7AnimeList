@@ -1,7 +1,12 @@
-import { useState } from "react";
-
+import { GlobalStyles } from "./styles/globalStyle";
+import RouterPages from "./Routes";
 function App() {
-  return <div className="App"></div>;
+  return (
+    <>
+      <GlobalStyles />
+      <RouterPages />
+    </>
+  );
 }
 
 export default App;
