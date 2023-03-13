@@ -37,7 +37,6 @@ const CardAnimeUserCustomList = ({
       <button
         onClick={() => {
           const newList = listAnimes.filter((anime) => anime.id != id);
-          console.log(newList);
           setAnimeList(newList);
           let listIds: number[] = [];
           newList.forEach((anime) => listIds.push(anime.id));
