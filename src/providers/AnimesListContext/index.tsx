@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { api } from "../../services/api";
 import { AnimeFavoriteContext } from "../AnimesFavoritesContext";
+import { LoadingContext } from "../LoadingContext";
 import { IDefaultProviderProps } from "../UserContext/types";
 import { IAnimeList, IAnimeListFavorite } from "./type";
 
@@ -20,20 +21,13 @@ interface IAnimesContext {
 export const AnimesListContext = createContext({} as IAnimesContext);
 
 export const AnimesListProvider = ({ children }: IDefaultProviderProps) => {
+  const { setLoading } = useContext(LoadingContext);
   const [animes, setAnimes] = useState<IAnimeList[]>([]);
   const [animeFound, setAnimeFound] = useState<IAnimeList | null>(null);
-  const localStorageListAnimesFavorite = localStorage.getItem(
-    "GeekAnimes:@favoriteAnime"
-  );
-
   const [listAnimesFavorite, setListAnimesFavorite] = useState<IAnimeList[]>(
-    localStorageListAnimesFavorite
-      ? JSON.parse(localStorageListAnimesFavorite)
-      : []
+    []
   );
-
-  const navigate = useNavigate()
-
+  const navigate = useNavigate();
   useEffect(() => {
     const listAnimes = async () => {
       try {
@@ -74,16 +68,23 @@ export const AnimesListProvider = ({ children }: IDefaultProviderProps) => {
     }
   };
 
-  const animeFavoriteRegister = async (formData: IAnimeList, animeId: number) => {
+  const animeFavoriteRegister = async (
+    formData: IAnimeList,
+    animeId: number
+  ) => {
     const token = localStorage.getItem("GeekAnimes:@token");
-    console.log(animeId)
+    console.log(animeId);
     if (token) {
       try {
-        const response = await api.post<IAnimeList>(`/users/${animeId}/favorites`, formData, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await api.post<IAnimeList>(
+          `/users/${animeId}/favorites`,
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         navigate("/dashboard");
       } catch (error) {
         console.error(error);
@@ -91,29 +92,49 @@ export const AnimesListProvider = ({ children }: IDefaultProviderProps) => {
     }
   };
 
+  const animeFavoriteDelete = async (idAnime: number) => {
+    const token = localStorage.getItem("GeekAnimes:@token");
+    const animesFav: IAnimeList[] = JSON.parse(
+      localStorage.getItem("GeekAnimes:@favoriteAnime") || "null"
+    );
+
+    if (token) {
+      try {
+        await api.delete(`/favorites/${idAnime}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const newFav = animesFav.filter((anime) => anime.id !== idAnime);
+        localStorage.setItem(
+          "GeekAnimes:@favoriteAnime",
+          JSON.stringify(newFav)
+        );
+        //   navigate("/dashboard");
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
   const addAnimeToListFavorite = (animeToAdd: IAnimeList, id: number) => {
-    console.log(id)
-    if (listAnimesFavorite.includes(animeToAdd)) {
+    setLoading(true);
+    if (listAnimesFavorite?.includes(animeToAdd)) {
       toast.warn("Este anime já foi adicionado à lista de favoritos");
+      setLoading(false);
     } else {
       toast.success("Anime adicionado à lista de favoritos");
       setListAnimesFavorite([...listAnimesFavorite, animeToAdd]);
       animeFavoriteRegister(animeToAdd, id);
+      setLoading(false);
     }
   };
-
-
-  useEffect(() => {
-    localStorage.setItem(
-      "GeekAnimes:@favoriteAnime",
-      JSON.stringify(listAnimesFavorite)
-    );
-  }, [listAnimesFavorite]);
 
   const removeAnimeToListFavorite = (animeId: number) => {
     const productRemove = listAnimesFavorite.filter(
       (animeToRemove) => animeToRemove.id !== animeId
     );
+    animeFavoriteDelete(animeId);
     toast.success("Anime removido da lista de favoritos");
     setListAnimesFavorite(productRemove);
   };

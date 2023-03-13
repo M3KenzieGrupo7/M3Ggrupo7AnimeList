@@ -1,17 +1,24 @@
 import styled from "styled-components";
 
 export const StyledContainerFavoriteList = styled.div`
-  /* width: 100%;
+  width: 100%;
+  max-width: 1024px;
   gap: 20px;
-  height: 600px; */
+  height: 600px;
   display: flex;
   /* justify-content: center; */
   align-items: center;
   flex-wrap: wrap;
   padding: 20px;
-  background-color: rgb(182, 187, 216);
   position: relative;
   border-radius: 4px;
+  background-color: ${({ theme }) => theme.colors.grey2};
+
+  button {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+  }
 
   h3 {
     font-family: "Inter", sans-serif;
@@ -27,10 +34,9 @@ export const StyledContainerFavoriteList = styled.div`
     gap: 20px;
     width: 100%;
     height: 280px;
-    background-color: rgb(182, 187, 216);
     position: relative;
     border-radius: 4px;
-    overflow-x: scroll;
+    overflow-x: auto;
   }
 
   ul::-webkit-scrollbar {
@@ -47,4 +53,16 @@ export const StyledContainerFavoriteList = styled.div`
     background: #6d4d82;
     border-radius: 4px;
   }
+`;
+export const StyledModalFavorite = styled.div`
+  position: fixed;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  z-index: 3000;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.62);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

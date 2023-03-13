@@ -34,8 +34,8 @@ const AnimeCard = ({
 
   const refreshFavorites = (anime: IAnimeList) => {
     addAnimeToListFavorite(anime, userID);
-    animesFavoritesUser()
-  }
+    animesFavoritesUser();
+  };
 
   return (
     <StyledAnimeCard>
@@ -50,7 +50,7 @@ const AnimeCard = ({
           className="btnAddList"
           id={String(anime.id)}
           onClick={() => {
-            setOpen("flex");
+            openModalEdit(userID);
             setAnimeSelectedID(anime.id);
           }}
         ></MdPlaylistAdd>

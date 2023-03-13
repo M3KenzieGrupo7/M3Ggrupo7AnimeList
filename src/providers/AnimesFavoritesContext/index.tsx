@@ -17,6 +17,9 @@ interface IAnimeFavoriteContext {
   animeFavoriteDelete: (idAnime: number) => Promise<void>;
   animesFavoritesList: [] | IAnimeList[];
   animesFavoritesUser: () => Promise<void>;
+  setAnimesFavoritesList: React.Dispatch<
+    React.SetStateAction<[] | IAnimeList[]>
+  >;
 }
 
 export const AnimeFavoriteContext = createContext({} as IAnimeFavoriteContext);
@@ -28,35 +31,6 @@ export const AnimeFavoriteProvider = ({ children }: IDefaultProviderProps) => {
   >([]);
 
   const navigate = useNavigate();
-  const token = localStorage.getItem("GeekAnimes:@token");
-  useEffect(()=> {
-    const animesFavoritesUser = async () => {
-      const token = localStorage.getItem("GeekAnimes:@token");
-      const idUser: number | null = JSON.parse(
-        localStorage.getItem("GeekAnimes:@idUser") || "null"
-      );
-      if (token) {
-        try {
-          const response = await api.get<IAnimeList[]>(
-            `/users/${idUser}/favorites`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-          setAnimesFavoritesList(response.data);
-          localStorage.setItem(
-            "GeekAnimes:@favoriteAnime",
-            JSON.stringify(response.data)
-          );
-        } catch (error) {
-          console.error(error);
-        }
-      }
-    };
-    animesFavoritesUser()
-  }, [token])
 
   const animesFavoritesUser = async () => {
     const token = localStorage.getItem("GeekAnimes:@token");
@@ -134,7 +108,7 @@ export const AnimeFavoriteProvider = ({ children }: IDefaultProviderProps) => {
   return (
     <AnimeFavoriteContext.Provider
       value={{
-        //animeFavoriteRegister,
+        setAnimesFavoritesList,
         animeFavoriteEdit,
         animeFavoriteDelete,
         animesFavoritesList,

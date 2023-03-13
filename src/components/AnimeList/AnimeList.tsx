@@ -5,23 +5,27 @@ import ModalEditAnimes from "../ModalListAnimes";
 import AnimeCard from "./AnimeCard/AnimeCard";
 import { StyledContainerAnimeList } from "./style";
 
-const AnimeList = () => {
+interface IAnimeProps {
+  setAnimeSelectedID: React.Dispatch<React.SetStateAction<number>>;
+}
+const AnimeList = ({ setAnimeSelectedID }: IAnimeProps) => {
   const { animes, addAnimeToListFavorite } = useContext(AnimesListContext);
-  const [animeSelectedID, setAnimeSelectedID] = useState(0);
 
   return (
     <StyledContainerAnimeList>
       <h3>Lista de animes</h3>
-      <div>
+      <ul>
         {animes.map((anime: IAnimeList) => (
-          <AnimeCard
-            key={anime.id}
-            anime={anime}
-            setAnimeSelectedID={setAnimeSelectedID}
-            addAnimeToListFavorite={addAnimeToListFavorite}
-          />
+          <li>
+            <AnimeCard
+              key={anime.id}
+              anime={anime}
+              setAnimeSelectedID={setAnimeSelectedID}
+              addAnimeToListFavorite={addAnimeToListFavorite}
+            />
+          </li>
         ))}
-      </div>
+      </ul>
     </StyledContainerAnimeList>
   );
 };

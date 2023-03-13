@@ -16,8 +16,8 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <BrowserRouter>
       <LoadingProvider>
         <UserProvider>
-          <AnimeFavoriteProvider>
-            <AnimesListProvider>
+          <AnimesListProvider>
+            <AnimeFavoriteProvider>
               <CustomListProvider>
                 <SearchProvider>
                   <ThemeProvider theme={mainTheme}>
@@ -25,8 +25,8 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
                   </ThemeProvider>
                 </SearchProvider>
               </CustomListProvider>
-            </AnimesListProvider>
-          </AnimeFavoriteProvider>
+            </AnimeFavoriteProvider>
+          </AnimesListProvider>
         </UserProvider>
       </LoadingProvider>
     </BrowserRouter>

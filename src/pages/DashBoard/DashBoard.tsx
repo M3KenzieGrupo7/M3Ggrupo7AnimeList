@@ -11,8 +11,8 @@ const DashBoard = () => {
     <>
       <Header></Header>
       <StyledMain>
-        <AnimeList></AnimeList>
-        <AnimeListFavorites></AnimeListFavorites>
+        <AnimeList setAnimeSelectedID={setAnimeSelectedID}></AnimeList>
+
         <ModalEditAnimes animeid={animeSelectedID} />
       </StyledMain>
     </>

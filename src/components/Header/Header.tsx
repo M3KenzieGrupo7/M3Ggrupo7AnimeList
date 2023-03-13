@@ -19,6 +19,7 @@ import schema from "./validation";
 import { useNavigate } from "react-router-dom";
 import { SearchContext } from "../../providers/SearchContext";
 import { FiSearch } from "react-icons/fi";
+import AnimeListFavorites from "../AnimeListFavorites/AnimeListFavorites";
 
 const Header = () => {
   const {
@@ -59,41 +60,53 @@ const Header = () => {
   };
 
   const { user } = useContext(UserContext);
+  const [openFavorite, setOpenFavorite] = useState(false);
 
   return (
-    <StyledBackHeader>
-      <StyledHeader>
-        <img src={logo} alt="" />
-        <form onSubmit={handleSubmit(submit)}>
-          <InputHeader
-            register={register("name")}
-            id="searchBarHeader"
-            placeholder="Pesquisar por Anime ou perfil"
-            type="text"
-          />
-          <StyledSearchButton type="submit">
-            <FiSearch />
-          </StyledSearchButton>
-        </form>
+    <>
+      <StyledBackHeader>
+        <StyledHeader>
+          <img src={logo} alt="" />
+          <form onSubmit={handleSubmit(submit)}>
+            <InputHeader
+              register={register("name")}
+              id="searchBarHeader"
+              placeholder="Pesquisar por Anime ou perfil"
+              type="text"
+            />
+            <StyledSearchButton type="submit">
+              <FiSearch />
+            </StyledSearchButton>
+          </form>
 
-        <MenuButton
-          changeValueButton={changeIsOpen}
-          isOpen={isOpen}
-          className="DropButton"
-        />
-        <HeaderDropBox isOpen={isOpen}>
-          <div>
-            <HomeButton />
-            <CategoryButton />
-          </div>
-          <HeaderProfileLink
-            nickname={user?.nickname || ""}
-            avatar={user?.background || ""}
+          <MenuButton
+            changeValueButton={changeIsOpen}
+            isOpen={isOpen}
+            className="DropButton"
           />
-          <LogoutButton />
-        </HeaderDropBox>
-      </StyledHeader>
-    </StyledBackHeader>
+          <HeaderDropBox isOpen={isOpen}>
+            <div>
+              <HomeButton />
+              <CategoryButton
+                setOpenModal={setOpenFavorite}
+                openFavorite={openFavorite}
+              />
+            </div>
+            <HeaderProfileLink
+              nickname={user?.nickname || ""}
+              avatar={user?.background || ""}
+            />
+            <LogoutButton />
+          </HeaderDropBox>
+        </StyledHeader>
+      </StyledBackHeader>
+      {openFavorite ? (
+        <AnimeListFavorites
+          setOpenModal={setOpenFavorite}
+          openFavorite={openFavorite}
+        />
+      ) : null}
+    </>
   );
 };
 

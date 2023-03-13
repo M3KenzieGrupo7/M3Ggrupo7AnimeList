@@ -9,15 +9,12 @@ interface IAnimeFavoriteProps {
   anime: IAnimeList;
 }
 
-
 const CardFavorite = ({ anime }: IAnimeFavoriteProps) => {
   const { removeAnimeToListFavorite } = useContext(AnimesListContext);
-  const { animeFavoriteDelete, animesFavoritesUser } = useContext(AnimeFavoriteContext);
 
   const refreshFavorites = (id: number) => {
-    animeFavoriteDelete(id)
-    animesFavoritesUser()
-  }
+    removeAnimeToListFavorite(id);
+  };
 
   return (
     <StyledFavoriteCard key={anime.id}>
@@ -27,10 +24,9 @@ const CardFavorite = ({ anime }: IAnimeFavoriteProps) => {
       <div className="content">
         <p>{anime.name}</p>
       </div>
-      <FcFullTrash
-        className="btnRemove"
-        onClick={() => refreshFavorites(anime.id)}
-      ></FcFullTrash>
+      <button className="btnRemove" onClick={() => refreshFavorites(anime.id)}>
+        Remover
+      </button>
     </StyledFavoriteCard>
   );
 };

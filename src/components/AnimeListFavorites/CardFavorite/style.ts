@@ -5,34 +5,36 @@ export const StyledFavoriteCard = styled.li`
   height: 200px;
   background-color: var(--grey4);
   border-radius: 4px;
-  background-color: #d9d9d9;
+  background-color: ${({ theme }) => theme.colors.grey2};
+  transition: transform 100ms cubic-bezier(0.4, 0, 1, 1) 0s;
 
+  :hover {
+    transform: scale(1.08);
+  }
   img {
-    width: 100px;
+    width: 100%;
     height: 100px;
     border-radius: 4px 4px 0 0;
   }
-
   .content {
-    height: 50px;
+    height: 70px;
     padding: 8px;
-
     p {
       width: 100%;
-      max-height: 40px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      font-family: Inter, sans-serif;
+      font-family: "Inter", sans-serif;
       font-size: 11px;
       font-weight: 500;
+      color: ${({ theme }) => theme.colors.white};
     }
   }
 
   .btnRemove {
-    height: 25px;
-    width: 25px;
     cursor: pointer;
-    color: #6d4d82;
-    padding-left: 5px;
+    color: ${({ theme }) => theme.colors.red1};
+    position: initial;
+  }
+
+  @media (min-width: 720px) {
+    width: 150px;
   }
 `;
