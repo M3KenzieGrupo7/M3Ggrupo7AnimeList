@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import imgBackgroud from "../../assets/registerimg.svg";
+
 export const StyledMainRegister = styled.main`
-  background-image: url(${imgBackgroud});
+  background-image: url("../../assets/registerimg.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   width: 100vw;
@@ -11,7 +11,7 @@ export const StyledMainRegister = styled.main`
   justify-content: center;
   color: white;
   .info-box-form {
-    background-color:${({theme})=> theme.colors.grey};
+    background-color: ${({ theme }) => theme.colors.grey};
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -30,8 +30,8 @@ export const StyledMainRegister = styled.main`
   a {
     color: white;
   }
-  a:hover{
-    color:${({theme})=> theme.colors.green1};
+  a:hover {
+    color: ${({ theme }) => theme.colors.green1};
   }
   @media (min-width: 720px) {
     .info-box-form {
