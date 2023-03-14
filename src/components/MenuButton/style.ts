@@ -9,7 +9,7 @@ export const StyledButton = styled.button`
     height: 100%;
   }
   background-color: transparent;
-  @media (min-width: 720px) {
+  @media (min-width: 1000px) {
     display: none;
   }
 `;

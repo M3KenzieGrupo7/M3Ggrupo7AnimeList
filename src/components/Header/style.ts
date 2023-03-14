@@ -60,7 +60,7 @@ export const HeaderDropBox = styled.div<IHeaderStyleProps>`
   gap: 5px;
   padding: 15px;
   background-color: ${({ theme }) => theme.colors.grey2};
-  @media (min-width: 768px) {
+  @media (min-width: 1000px) {
     display: flex;
     position: unset;
     flex-direction: row;
